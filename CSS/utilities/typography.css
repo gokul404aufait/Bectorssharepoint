@@ -1,0 +1,116 @@
+.bec-fs-xxl {
+    font-size: 28px;
+    font-weight: 600;
+    line-height: 36.4px;
+    color: #1A1A1A;
+}
+
+.bec-fs-xl {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 31.2px;
+    color: #1A1A1A;
+}
+
+.bec-fs-lg {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 23.4px;
+    color: #1A1A1A;
+}
+
+.bec-fs-md {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 18.2px;
+    color: #1A1A1A;
+}
+
+.bec-fs-sm {
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 16.9px;
+    color: #1A1A1A;    
+}
+
+/* font color */
+.text-primary {
+    color: #1A1A1A !important;
+}
+
+.text-secondary {
+    color: #525967 !important;
+}
+
+.text-yellow{
+    color: #B38B1C !important;
+}
+
+.text-org{
+    color: #BF712A !important;
+}
+
+.text-green{
+    color: #3D8232 !important;
+}
+
+.text-red{
+    color: #B42716 !important;
+}
+
+.text-gold {
+    color: #BD8B13 !important;
+}
+
+.text-dark {
+    color: #0C0D10 !important;
+}
+
+.text-light {
+    color: #F8F9FB !important;
+}
+
+/* font-weight */
+.fw-100{
+    font-weight: 100 !important;
+}
+.fw-200{
+    font-weight: 200 !important;
+}
+.fw-300{
+    font-weight: 300 !important;
+}
+.fw-350{
+    font-weight: 350 !important;
+}
+.fw-400{
+    font-weight: 400 !important;
+}
+.fw-500{
+    font-weight: 500 !important;
+}
+.fw-600{
+    font-weight: 600 !important;
+}
+
+/* line-height */
+
+.lh-36 {
+    line-height: 36.4px !important;
+}
+
+.lh-31 {
+    line-height: 31.2px !important;
+}
+
+.lh-23 {
+    line-height: 23.4px !important;
+}
+
+.lh-18 {
+    line-height: 18.2px !important;
+}
+
+.lh-16 {
+    line-height: 16.9px !important;
+}

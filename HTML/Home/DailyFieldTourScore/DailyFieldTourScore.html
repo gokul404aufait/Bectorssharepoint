@@ -1,0 +1,62 @@
+<script src="/sites/Mrs_Bectors_PTMS/BectorsSourceCode/JS/Home/DailyFieldTourScore/TourScoreChartDAL.js"></script>
+<script src="/sites/Mrs_Bectors_PTMS/BectorsSourceCode/JS/Home/DailyFieldTourScore/TourScoreChartBAL.js"></script>
+<!--<script type="text/javascript" src="/sites/Mrs_Bectors_PTMS/BectorsSourceCode/JS/Home/WelcomeWebPart/WelcomeBAL.js"></script>-->
+
+<script
+  type="text/javascript"
+  src="https://www.gstatic.com/charts/loader.js"
+></script>
+<input type="hidden" id="hdnGivenMonth" />
+<input type="hidden" id="hdnGivenMonthName" />
+<input type="hidden" id="hdnGivenYear" />
+
+<section class="daily-graph dGraph mb-20 d-none" id="ShowGraph">
+  <div
+    class="d-flex align-items-center justify-content-between flex-wrap py-2 column-gap-5 row-gap-3"
+  >
+    <div class="d-flex align-items-center gap-2">
+      <h3 class="bec-fs-lg text-dark">Tour Score</h3>
+      <div class="veiw-all-section viewTs"></div>
+    </div>
+
+    <div
+      class="tour-score-month-year d-flex align-items-center flex-wrap gap-2"
+    >
+      <div class="form-group">
+        <select
+          id="drpTourScoreDate"
+          class="form-select select-secondary drpTourScoreDate"
+        ></select>
+      </div>
+
+      <div class="form-group">
+        <select
+          id="drpTourScoreMonth"
+          class="form-select select-secondary drpTourScoreMonth"
+        ></select>
+      </div>
+
+      <div class="form-group">
+        <select
+          id="drpTourScoreYear"
+          class="form-select select-secondary drpTourScoreYear"
+        ></select>
+      </div>
+      <button
+        class="btn btn-outline-secondary btn-sm"
+        data-toggle="tooltip"
+        data-placement="bottom"
+        title="It will the display the current month score"
+        onclick="clearDate()"
+      >
+        <img
+          src="/sites/Mrs_Bectors_PTMS/BectorsSourceCode/Images/reload.svg"
+          class="tour-score-reset-img"
+        />
+      </button>
+
+      <!--   <button type="button" class="btn Searchbtn" onclick="searchMonthGraph()" >Search</button> -->
+    </div>
+  </div>
+  <div id="tourChart" style="display: none"></div>
+</section>

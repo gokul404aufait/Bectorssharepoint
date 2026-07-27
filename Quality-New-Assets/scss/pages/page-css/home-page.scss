@@ -1,0 +1,10 @@
+// Pages base
+@import 'page-css-base';
+
+// Components
+@import "../../components/form";
+@import "../../components/main-popup";
+@import "../../components/select2-custom";
+
+// Pages specific
+@import '../home';

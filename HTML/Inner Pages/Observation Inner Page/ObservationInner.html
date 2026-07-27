@@ -1,0 +1,45 @@
+<script src="/sites/Mrs_Bectors_PTMS/BectorsSourceCode/JS/Inner%20Pages/Observation%20Inner%20Page/OpenObservationInnerDAL.js"></script>
+<script src="/sites/Mrs_Bectors_PTMS/BectorsSourceCode/JS/Inner%20Pages/Observation%20Inner%20Page/OpenObservationInnerBAL.js"></script>
+
+<div class="ptms-inner-section">
+  <div class="container-fluid">
+    <h6 class="inner-heading" id="CategoryTitle" style="display: none"></h6>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <!-- getting the data for sevarity Master-->
+  <div class="d-flex align-items-center justify-content-between gap-3 mb-20">
+    <h3 class="bec-fs-lg text-dark">Open Observations</h3>
+
+    <div class="d-flex align-items-center gap-3">
+      <div class="selection-sector">
+        <div class="form-group">
+          <select
+            id="SaverityDropDownId"
+            class="form-select"
+            onchange="drpDepartmentChangefun()"
+          >
+            <option value="All">All Saverity</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="selection-sector">
+        <div class="form-group">
+          <select
+            id="InnerDepartmentDropDownId"
+            class="form-select"
+            onchange="drpDepartmentChangefun()"
+          >
+            <option value="All">All Department</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="DashboardTable table-container" id="tblOpenObservationInner">
+    <div class="table-responsive" id="divtblObservation"></div>
+  </div>
+</div>

@@ -1,0 +1,86 @@
+:root a.btn, :root .btn {
+    --bs-btn-padding-x: 12px;
+    --bs-btn-padding-y: 16px;
+    --bs-border-radius: 6px;
+    --bs-border-width: 0px;
+    --bs-btn-font-weight: 500;
+    --bs-btn-font-size: 14px;
+    --bs-btn-line-height: 18.2px;
+    --bs-btn-font-family: inherit;
+    min-width: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+:root .btn {
+    font-size: var(--bs-btn-font-size);
+    font-weight: var(--bs-btn-font-weight);
+    line-height: var(--bs-btn-line-height);
+    border: var(--bs-border-width) solid transparent;
+    padding: var(--bs-btn-padding-x) var(--bs-btn-padding-y);
+}
+
+:root a.btn:visited {
+    color: var(--bs-btn-color);
+}
+
+/* primary */
+:root a.btn-primary, :root .btn-primary {
+    --bs-btn-color: #FFFFFF;
+    --bs-btn-hover-color: #FFFFFF;
+    --bs-btn-active-color: #FFFFFF;
+
+    --bs-btn-border-color: #FFFFFF;
+    --bs-btn-hover-border-color: #FFFFFF;
+    --bs-btn-active-border-color: #FFFFFF;
+
+    --bs-btn-active-shadow: 0px 0px 4px 0px #21212140;
+    --bs-btn-focus-shadow-rgb: 0px 0px 4px 0px #21212140;
+
+    --bs-btn-disabled-color: #71706E;
+    --bs-btn-disabled-bg: #EDEDEC;
+    --bs-btn-disabled-border-color: #FFFFFF;
+}
+
+:root .btn-group-sm>.btn, :root .btn-sm {
+    --bs-border-radius-sm: 6px;
+    --bs-btn-padding-y: 8px;
+    --bs-btn-padding-x: 8px;
+    --bs-btn-font-size: 14px;
+    --bs-btn-border-radius: var(--bs-border-radius-sm);
+    padding: var(--bs-btn-padding-y) var(--bs-btn-padding-x);
+}
+
+:root .btn-primary {
+    color: #FFFFFF;
+    background-color: #0A6AB6;
+}
+
+:root .btn-primary:hover {
+    background-color: #0A6AB6;
+}
+
+:root .btn-primary:active {
+    background-color: #0A6AB6;
+}
+
+:root .btn-outline-secondary {
+    --bs-btn-color: #FFFFFF;
+    --bs-btn-border-color: #E7EFFA;
+    --bs-border-width: 1px;
+    border: var(--bs-border-width) solid var(--bs-btn-border-color);
+    background-color: var(--bs-btn-color);
+}
+
+:root a.btn-link {
+    --bs-btn-font-size: 13px;
+    --bs-btn-line-height: 16.9px;
+    --bs-link-color: #EB7203;
+    text-decoration: none;
+    padding: 0;
+}
+
+:root .btn-link:hover {
+    text-decoration: underline;
+}

@@ -1,0 +1,22 @@
+body {
+	--layout-container-width: 1280px;
+	--layout-container-gap: 24px;
+
+	@include mq(desktop) {
+		--layout-container-width: 100%;
+	}
+}
+
+.container {
+	max-width: calc(var(--layout-container-width) + (var(--layout-container-gap) * 2));
+	padding: 0 var(--layout-container-gap);
+	margin: 0 auto;
+
+	&-fluid {
+		padding: 0 rem(40);
+
+		@include mq(tablet) {
+			padding: 0 rem(24);
+		}
+	}
+}

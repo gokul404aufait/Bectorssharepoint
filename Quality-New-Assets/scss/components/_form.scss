@@ -1,0 +1,190 @@
+body {
+  --input-padding-y: 10px;
+  --input-padding-x: 16px;
+  --input-font-size: 13px;
+  --input-font-weight: 500;
+  --input-line-height: 1.6;
+  --input-color: var(--color-text-primary);
+  --input-bg: var(--color-white);
+  --input-border-color: #CED4DB;
+  --input-border-radius: 8px;
+  --input-focus-color: #8B98A9;
+  --input-box-shadow: 0px 0px 0px 2.5px rgba(206, 212, 219, 0.40);
+  --input-focus-border-color: var(--color-white);
+  --input-focus-box-shadow: none;
+  --input-placeholder-color: var(--color-text-secondary);
+  --form-error-color: var(--color-error);
+  // --form-error-opacity: 0;
+  // --form-error-visibility: hidden;
+  // --form-error-position: 8px;
+  // --form-error-active-position: 18px;
+}
+
+// .form-error {
+//   position: absolute;
+//   bottom: calc(-1 * var(--form-error-position));
+//   color: var(--color-white);
+//   font-family: var(--base-font-family);
+//   font-size: 12px;
+//   font-weight: 400;
+//   line-height: 1.1;
+//   opacity: var(--form-error-opacity);
+//   visibility: var(--form-error-visibility);
+//   transition: all .4s;
+// }
+
+.form-control {
+  display: block;
+  width: 100%;
+  padding: var(--input-padding-y) var(--input-padding-x);
+  font-family: var(--base-font-family);
+  font-size: var(--input-font-size);
+  font-weight: var(--input-font-weight);
+  line-height: var(--input-line-height);
+  color: var(--input-color);
+  background-color: var(--input-bg);
+  background-clip: padding-box;
+  border: 1px solid var(--input-border-color);
+  border-radius: var(--input-border-radius);
+  appearance: none; // Fix appearance for date inputs in Safari
+  transition: all .4s;
+
+  &:is(textarea) {
+    resize: none;
+  }
+
+  &[type="file"] {
+    overflow: hidden; // prevent pseudo element button overlap
+
+    &:not(:disabled):not([readonly]) {
+      cursor: pointer;
+    }
+  }
+
+  // Customize the `:focus` state to imitate native WebKit styles.
+  &:focus {
+    border-color: var(--input-focus-color);
+    box-shadow: var(--input-box-shadow);
+  }
+
+
+  // Placeholder
+  &::placeholder {
+    color: var(--input-placeholder-color);
+    // Override Firefox's unusual default opacity; see https://github.com/twbs/bootstrap/pull/11526.
+    opacity: 1;
+  }
+
+  &.is-invalid {
+    border-color: var(--form-error-color);
+  }
+}
+
+.form-check {
+  display: inline-flex;
+  position: relative;
+  --checkbox-size: 20px;
+  --checkbox-color: #D0D5DD;
+  --checkbox-border-radius: 4px;
+  --checkbox-opacity: 0;
+  --checkbox-visibility: hidden;
+
+  &:has(.form-check-input[type="radio"]) {
+    --checkbox-size: 16px;
+    --checkbox-border-radius: 50%;
+
+    .form-check-label {
+
+      &::after {
+        display: none;
+      }
+    }
+  }
+
+  &:has(.form-check-input[type="radio"]:checked) {
+    .form-check-label {
+      &::before {
+        --checkbox-color: #0A6AB6;
+        background-color: #fff;
+        box-shadow: inset 0 0 0 5px var(--checkbox-color);
+      }
+    }
+  }
+
+  &-lists {
+    display: flex;
+    gap: 24px;
+  }
+
+  .form-check-input {
+    position: absolute;
+    width: 0;
+    visibility: hidden;
+
+    &:checked {
+      & + label {
+        --checkbox-opacity: 1;
+        --checkbox-visibility: visible;
+      }
+    }
+  }
+
+  .form-check-label {
+    --form-label-margin-bottom: 0;
+    position: relative;
+    display: inline-flex;
+    gap: 8px;
+    align-items: flex-start;
+    cursor: pointer;
+
+    &::before,
+    &::after {
+      content: "";
+      pointer-events: none;
+    }
+
+    &::before {
+      min-width: var(--checkbox-size);
+      aspect-ratio: 1;
+      border: 1px solid var(--checkbox-color);
+      border-radius: var(--checkbox-border-radius);
+      transition: all .4s;
+    }
+
+    &::after {
+      position: absolute;
+      top: 6px;
+      width: 9px;
+      height: 5px;
+      left: 5.5px;
+      border: 2px none var(--checkbox-color);
+      border-style: none none solid solid;
+      opacity: var(--checkbox-opacity);
+      visibility: var(--checkbox-visibility);
+      transform: rotate(-45deg);
+      transition: all .4s;
+    }
+  }
+}
+
+.form-label {
+  --form-label-font-size: 13px;
+  --form-label-color: var(--color-text-primary);
+  --form-label-margin-bottom: 6px;
+  display: flex;
+  gap: 2px;
+  font-family: var(--base-font-family);
+  font-size: var(--form-label-font-size);
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--form-label-color);
+  margin-bottom: var(--form-label-margin-bottom);
+}
+
+.required-elem {
+  font-family: var(--base-font-family);
+  font-size: var(--form-label-font-size);
+  color: var(--form-error-color);
+  font-weight: 500;
+  line-height: 1.5;
+}

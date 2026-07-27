@@ -1,0 +1,42 @@
+.row {
+  --row-gutter: 24px;
+
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: var(--row-gutter);
+  margin: 0 calc(-1 * var(--row-gutter) / 2);
+
+  [class*="row-col"] {
+    flex: 1 0 0%;
+    min-width: 0;
+    margin: 0 calc(var(--row-gutter) / 2);
+  }
+
+  @for $i from 1 through 12 {
+    .row-col-#{$i} {
+      flex: 0 0 calc((100% / 12) * #{$i} - var(--row-gutter));
+      max-width: calc((100% / 12) * #{$i} - var(--row-gutter));
+    }
+  }
+
+  @for $i from 1 through 12 {
+    &-cols-#{$i} {
+      .row-col {
+        flex: 0 0 auto;
+        width: calc((100% / #{$i}) - var(--row-gutter));
+      }
+    }
+  }
+
+  &.row-gutter-8 {
+    --row-gutter: 8px;
+  }
+
+  &.row-gutter-16 {
+    --row-gutter: 16px;
+  }
+
+  &.row-gutter-20 {
+    --row-gutter: 20px;
+  }
+}

@@ -1,0 +1,45 @@
+.user-brand .user-img-box .user-img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.daily-graph {
+    border-radius: 12px;
+    border: 1px solid #EBEEF4;
+    background: rgba(250, 251, 252, 0.741);
+    padding: 0px 20px 20px;
+}
+
+.observation-report {
+    border-radius: 12px;
+    border: 1px solid #EBEEF4;
+    background: rgba(250, 251, 252, 0.741);
+    padding: 20px 20px 0px;
+}
+
+#tourChart{
+	background-color: transparent !important;
+}
+
+.top-navbar {
+    display: none !important;
+}
+
+.nav-header {
+    position: relative;
+    width: 100%;
+    top: 0;
+    z-index: 9; 
+    padding: 24px;
+    border-bottom: 1px solid #EBEEF4;
+    background-color: #FFFFFF;
+}
+
+.ptms-dashboard-section {
+    padding: 24px 28px;
+    height: 100%;
+    overflow: auto;
+}

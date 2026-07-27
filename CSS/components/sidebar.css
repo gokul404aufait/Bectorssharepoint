@@ -1,0 +1,168 @@
+.sidebar-container {
+    max-width: 260px;
+    min-width: 260px;
+    width: 100%;
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: #FFFFFF;
+    border-right: 1px solid #DFDFDF;
+    transition: all 0.3s ease-in-out;
+}
+
+@media screen and (max-width: 991px) {
+    .sidebar {
+        position: fixed;
+        <!--inset: 0; -->
+        <!--width: 100%; -->
+        height: 100vh;
+        <!-- z-index: -10; -->
+        transition: all 500ms ease;
+    }
+    .sidebar-container:not(.collapsed) {
+        position: fixed;
+        top: 0;
+        left: -348px;
+    }
+
+    .sidebar.open {
+        background: linear-gradient(90deg, rgba(2,0,36,0.30024509803921573) 100%, rgba(9,9,121,1) 100%, rgba(0,212,255,1) 100%);
+        z-index: 999;
+    }
+
+    .sidebar.open .sidebar-container:not(.collapsed) {
+        max-width: 348px;
+        min-width: 348px;
+        left: 0;
+    }
+
+    .sidebar-close-btn {
+        display: inline-flex;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .sidebar.open .sidebar-container:not(.collapsed) {
+        max-width: 100%;
+        min-width: 100%;
+    }
+}
+
+.sidebar-container.collapsed {
+    max-width: 68px;
+    min-width: 68px;
+    width: 100%;
+}
+
+.sidebar-container .brand-logo {
+    max-height: 70px;
+    min-height: 70px;
+    padding: 16px 20px;
+    margin-bottom: 36px;
+}
+
+.brand-logo img {
+    max-height: 70px;
+    width: 100%;
+}
+
+ul.nav-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul.nav-list li.list-item {
+    padding: 4px 16px 4px 20px;
+}
+ul.nav-list li.list-item:not(:last-child) {
+    margin-bottom: 4px;
+}
+
+ul.nav-list li.list-item span {
+    gap: 10px;
+    cursor: pointer;
+}
+
+ul.nav-list li.list-item span button.btn.p-0 {
+    pointer-events: none;
+}
+
+ul.nav-list li.list-item span.item-title span.item-name, 
+ul.nav-list li.list-item ul.nav-sub-list li.sub-list-item a {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    transition: color 0.3s ease-in-out;
+}
+
+.sidebar-container.collapsed .logo img {    
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.sidebar-container:not(.collapsed) ul.nav-list li.list-item.active span.item-title span.list-icon {
+    background-color: #0A6AB6;
+}
+
+.sidebar-container:not(.collapsed) ul.nav-list li.list-item.active:nth-child(1) span.item-title span.list-icon svg path {
+    fill: #FFFFFF;
+    stroke: #FFFFFF;
+}
+.sidebar-container:not(.collapsed) ul.nav-list li.list-item.active:nth-child(2) span.item-title span.list-icon svg path:first-child, .sidebar-container:not(.collapsed) ul.nav-list li.list-item.active:nth-child(3) span.item-title span.list-icon svg path {
+    fill: #FFFFFF;
+}
+
+.sidebar-container:not(.collapsed) ul.nav-list li.list-item.active:nth-child(2) span.item-title span.list-icon svg path:last-child, .sidebar-container:not(.collapsed) ul.nav-list li.list-item.active:nth-child(2) span.item-title span.list-icon svg rect {
+    fill: #1A1A1A;
+}
+
+.sidebar-container:not(.collapsed) ul.nav-list li.list-item.active:nth-child(4) span.item-title span.list-icon svg path:nth-child(2) {
+    fill: #FFFFFF;
+    stroke: #FFFFFF;
+}
+
+.sidebar-container:not(.collapsed) ul.nav-list li.list-item.active:nth-child(4) span.item-title span.list-icon svg path:nth-child(3), .sidebar-container:not(.collapsed) ul.nav-list li.list-item.active:nth-child(4) span.item-title span.list-icon svg path:nth-child(4), .sidebar-container:not(.collapsed) ul.nav-list li.list-item.active:nth-child(4) span.item-title span.list-icon svg path:nth-child(5) {
+    stroke: #1A1A1A;
+}
+
+.sidebar-container:not(.collapsed) ul.nav-list li.list-item.active span.item-title span.item-name {
+    color: #0A6AB6;
+}
+
+ul.nav-list li.list-item ul.nav-sub-list {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 400ms;
+}
+
+.sidebar-container:not(.collapsed) ul.nav-list li.list-item.active ul.nav-sub-list {
+    max-height: 300px;
+}
+
+ul.nav-sub-list li.sub-list-item {
+    padding: 12px 20px;
+}
+
+ul.nav-list li.list-item .list-icon {
+    padding: 6px;
+    border-radius: 8px;
+    background-color: #F3F3F3;
+}
+
+ul.nav-list li.list-item .list-icon svg {
+    max-width: 20px;
+    min-width: 20px;
+    max-height: 20px;
+    min-height: 20px;
+}
+
+.toggle-btn svg {
+    max-width: 24px;
+    min-width: 24px;
+    max-height: 24px;
+    min-height: 24px;
+}
+
+.sidebar-close-btn {
+    display: none;
+}

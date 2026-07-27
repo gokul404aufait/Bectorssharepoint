@@ -1,0 +1,118 @@
+<script type="text/javascript" src="/sites/Mrs_Bectors_PTMS/BectorsSourceCode/JS/PlantTourDetails/PlantTourDAL.js"></script>
+<script type="text/javascript" src="/sites/Mrs_Bectors_PTMS/BectorsSourceCode/JS/PlantTourDetails/PlantTourBAL.js"></script>
+<script src="/sites/Mrs_Bectors_PTMS/BectorsSourceCode/JS/Criteria%20Wise%20Observation/Criteria_Upload.js"></script>
+
+<style>
+#divCongrats {
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 2;
+  cursor: pointer;
+}
+
+#divCongrats .ml15{
+  position: absolute;
+  top: 50%;
+  left: 45%;
+ 
+  color: white !important;
+  transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+} 
+</style>
+
+
+<input type="hidden" id="hdnObservationId">
+<input type="hidden" id="hdnRoleName">
+<input type="hidden" id="hdnPlantId">
+<input type="hidden" id="hdnDepartmentId">
+<input type="hidden" id="hdnDepartmentStatus">
+
+
+<div id="CriteriaWiseObservationId">
+</div>  
+
+<div class="MainDev">
+ <div class="accordion" id="accordionExample___PlantDepartmentID__">
+    <div class="card finished-tour-card">
+ 
+        <div class="card-header accordion-header" id="heading___PlantDepartmentID__">
+         
+   <div class=" align-self-center minimum-height">
+      
+     
+       <h5 class="mt-0 dt-header"><span>Department Tour </span></h5> 
+       <div id="divStatus" title="Tour completion percentage" align="right">
+                    		<strong></strong>
+                    	</div>          
+         </div>
+         
+
+         <hr class="hr-t25"/>
+         
+         <div class="row row-department-details">
+            <!-- <h2 class=" align-self-center minimum-height">
+              <div class="accordion-btn btn-link" type="button" data-toggle="collapse" data-target="#collapse___PlantDepartmentID__" aria-expanded="true" aria-controls="collapse___PlantDepartmentID__">
+                    <div class="media accordion-media"> 
+                     
+
+                        <div class="media-body align-self-center width-ninty" align="left">-->
+                        <div class="col-12 col-md-2">
+                        <div class="plan-manager-tour">
+
+                        <label>Started On :  </label>
+                        <label id="lblstartedTour" class="labeltxtclass"></label></div></div>
+                        
+                        <div class="col-12 col-md-2" id="lblFinishedTour">
+                        <div class="plan-manager-tour">
+                        <label  > Finished On :  </label>
+                        <label id="FinishedTourDateId" class="labeltxtclass"></label></div></div>
+                        
+                        <div class="col-12 col-md-2">
+                    <div class="plan-manager-tour">
+                        <label>Duration(HH:MM):  </label>
+                        <label id="TimeDuration"  class="labeltxtclass"></label>
+                     </div></div>
+                     
+                     <div class="col-12 col-md-6">
+                       <div class="plan-manager-tour comment-section">                      
+                        <label>Comments</label>
+					<textarea id="txtFinalComment" rows="1"></textarea>
+                    </div></div>
+                    
+							<div id="divCongrats" style="width:100%;">
+								<h1 class="ml15">
+									<span class="word word1"></span><br/>
+									<span class="word word2"></span>
+								</h1>
+							</div>
+
+                    <div class="col-12 col-md-2  pd-submit-btn">
+                        <button type="button" class="btn Submitbtn  mb-2" onclick="PauseTour()" style="background-color:#808080; color:#fff; padding: 5px 20px;">Pause Tour</button>
+                    	<button type="button" class="btn Submitbtn" onclick="SaveFinalComment()" style=" background-color:#004080;color: #fff;padding: 5px 20px;">Finish Tour</button>
+                        </div>
+
+                     <!--   <img src="/sites/Mrs_Bectors_PTMS/BectorsSourceCode/Images/plus-sign.png" class="align-self-center navigate-large">
+                        <img src="/sites/Mrs_Bectors_PTMS/BectorsSourceCode/Images/minus-sign.png" class="align-self-center navigate-reduce">-->
+              <!--  </div></div>
+            </h2>
+            </div>-->
+            
+            
+            </div>
+            
+        </div>
+        <div id="collapse___PlantDepartmentID__" class="collapse in" aria-labelledby="heading___PlantDepartmentID__" data-parent="#accordionExample___PlantDepartmentID__" style="height: 0px;" aria-expanded="true">   
+           </div>
+    </div>
+</div>
+ </div>
+ 
+

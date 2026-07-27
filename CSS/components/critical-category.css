@@ -1,0 +1,82 @@
+.grid-section {
+    border: 1px solid #EBEEF4;
+    border-radius: 12px;
+    background-color: #FFFFFF;
+}
+
+.grid-section a {
+    padding: 16px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.count-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background-color: #FFEEDF;
+    padding: 10px;
+}
+
+.count-icon .icon img{
+    max-width: 28px;
+    min-width: 28px;
+    max-height: 28px;
+    min-height: 28px;
+}
+
+button.btn.btn-outline-secondary.btn-sm:hover .tour-score-reset-img{
+ transform: rotate(45deg);
+ -ms-transform: rotate(45deg); /* IE 9 */
+}
+
+.white-bg {
+    background-color: #fff;
+}
+
+.owl-theme .owl-nav [class*=owl-] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 24px;
+    min-width: 24px;
+    max-height: 24px;
+    min-height: 24px;
+    border-radius: 50%;
+    background-color: #EBEEF4;
+    transition: all 0.3s ease-in-out;
+}
+
+.owl-theme .owl-nav [class*=owl-]:hover {
+    background-color: #EB7203;
+}
+
+.owl-carousel .owl-nav button.owl-prev span, .owl-carousel .owl-nav button.owl-next span {
+    content: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5 12H19M19 12L13 18M19 12L13 6' stroke='%231A1A1A' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
+    width: 20px;
+    height: 20px;
+}
+
+.owl-theme .owl-nav [class*=owl-]:hover span {
+    content: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5 12H19M19 12L13 18M19 12L13 6' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
+}
+
+.owl-carousel .owl-nav button.owl-prev {
+    position: absolute;
+    top: 50%;
+    left: -30px;
+    transform: translateY(-50%) rotate(180deg);
+}
+
+.owl-carousel .owl-nav button.owl-next {
+    position: absolute;
+    top: 50%;
+    right: -30px;
+    transform: translateY(-50%);
+}
+
+.owl-theme .owl-nav .disabled {
+    visibility: hidden;
+    opacity: 0;
+}

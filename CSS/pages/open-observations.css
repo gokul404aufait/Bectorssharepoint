@@ -1,0 +1,32 @@
+.ptms-form-section {
+    margin-top: 7px;
+    padding: 24px 28px;
+}
+
+button.buttons-excel.btn-primary {
+    background-image: none !important;
+    border-radius: 6px;
+}
+
+button.buttons-excel.btn-primary:hover:not(.disabled):not(:disabled) {
+    border: 0;
+    background-image: none !important;
+    background-color: #004080;
+}
+button.buttons-excel.btn-primary span {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 18.2px;
+    color: #FFFFFF;
+}
+
+.DashboardTable.table-container {
+    border-radius: 12px;
+    border: 1px solid #EBEEF4;
+    background: rgba(250, 251, 252, 0.741);
+    padding: 20px;
+}
+
+table.dataTable.no-footer {
+    border-bottom: 0;
+}

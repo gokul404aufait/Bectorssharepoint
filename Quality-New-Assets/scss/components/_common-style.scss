@@ -1,0 +1,13 @@
+.bs-fade-elem {
+  display: none !important;
+  opacity: 0;
+  transition: opacity 0.3s;
+
+  &.bs-fade-active {
+    display: block !important;
+  }
+
+  &.bs-fade-in {
+    opacity: 1;
+  }
+}

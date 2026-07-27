@@ -1,0 +1,17 @@
+.pill {
+  --pill-colo-bg: #EFE9F5;
+  --pill-padding: 8px 12px;
+  display: inline-flex;
+  background-color: var(--pill-colo-bg);
+  font-family: var(--base-font-family);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--color-text-primary);
+  padding: var(--pill-padding);
+  border-radius: 35px;
+
+  &.pill-primary-dark {
+    --pill-colo-bg: #CDBBE1;
+  }
+}

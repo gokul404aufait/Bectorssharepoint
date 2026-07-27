@@ -1,0 +1,63 @@
+:root .table-wrapper table {
+    --bs-table-border-color: #4E4C4A1A;
+    margin-bottom: 0px;
+    border-radius: 6px;
+}
+
+:root .table-wrapper.table-bordered {
+    border: 1px solid #DCDBDB;
+    border-collapse: separate;
+    border-radius: 4px;
+    overflow: hidden;
+    border-spacing: 0;
+}
+
+:root .table.table-bordered.bottom-radius-0 {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+:root .table-wrapper.table-bordered table {
+    border: transparent;
+}
+
+:root .table-wrapper table thead tr {
+    border-bottom: 1px solid #D0D5E0;
+}
+
+:root .table-wrapper table tbody tr:not(:last-child) {
+    border-bottom: 1px solid #EBEEF4;
+}
+
+:root .table-wrapper table > :not(caption) > * > * {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 18.2px;
+    color: #0C0D10;
+    padding: 16px;
+    border-width: 0;
+    background-color: transparent;
+}
+
+:root .table-wrapper table thead th {
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 16.9px;
+    color: #5B616E;
+    padding: 12px 16px;
+    border-bottom: 1px solid #D0D5E0;
+    white-space: nowrap;
+}
+
+:root .table-wrapper table tr td {
+    vertical-align: middle;
+}
+
+:root .table-wrapper table.table-md thead th {
+    padding: 12px 16px;
+}
+
+:root table tbody tr:hover td,
+table:not(.table.table-grey).dataTable tbody tr:hover td {
+    background-color: #f9f9f9;
+}

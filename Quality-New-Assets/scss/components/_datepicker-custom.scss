@@ -1,0 +1,171 @@
+// picker
+.tempus-dominus-widget {
+	padding: 10px;
+	border-color: #e4e4e4;
+	box-shadow: 0px 4px 25px rgba(#000, 0.1);
+
+	.calendar-header {
+		justify-content: space-between;
+
+		.previous,
+		.next,
+		.picker-switch {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 25px;
+		}
+
+		.previous,
+		.next {
+			background-image: url("data:image/svg+xml,%3Csvg width='8' height='12' viewBox='0 0 8 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.75 10.5L6.25 6L1.75 1.5' stroke='%23CBCBCB' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
+			background-repeat: no-repeat;
+			background-position: center;
+			width: 35px;
+			padding: 0;
+			border-radius: 4px;
+			transition: all 0.4s;
+
+			i {
+				display: none;
+			}
+
+			&:hover {
+				background-color: #f2f2f4;
+			}
+		}
+
+		.previous {
+			transform: rotate(180deg);
+		}
+	}
+
+	.dow {
+		text-align: center;
+		color: var(--color-text-primary);
+		font-weight: 500;
+		padding-top: 4px;
+	}
+
+	.day,
+	.dow {
+		font-size: 13px;
+	}
+
+	.picker-switch {
+		font-size: 14px;
+	}
+
+	&.show {
+		z-index: calc(var(--main-popup-z-index) + 2);
+	}
+
+	[data-action] {
+		transition: all 0.4s;
+	}
+
+	.date-container-decades div:not(.no-highlight),
+	.date-container-years div:not(.no-highlight),
+	.date-container-months div:not(.no-highlight),
+	.date-container-days div:not(.no-highlight),
+	.time-container-clock div:not(.no-highlight),
+	.time-container-hour div:not(.no-highlight),
+	.time-container-minute div:not(.no-highlight),
+	.time-container-second div:not(.no-highlight) {
+		border-radius: 6px;
+
+		&.active {
+			background-color: var(--color-primary);
+		}
+	}
+}
+
+// for datepicker icon
+.datepicker-field {
+	.form-control {
+		background-image: url("data:image/svg+xml,%3Csvg width='17' height='16' viewBox='0 0 17 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M13.6636 1.99999H12.9969V0.666656H11.6636V1.99999H4.99691V0.666656H3.66357V1.99999H2.99691C2.26357 1.99999 1.66357 2.59999 1.66357 3.33332V14C1.66357 14.7333 2.26357 15.3333 2.99691 15.3333H13.6636C14.3969 15.3333 14.9969 14.7333 14.9969 14V3.33332C14.9969 2.59999 14.3969 1.99999 13.6636 1.99999ZM13.6636 14H2.99691V5.33332H13.6636V14Z' fill='%23525967'/%3E%3C/svg%3E%0A");
+		background-repeat: no-repeat;
+		background-position: calc(100% - 14px) center;
+	}
+}
+
+// for timepicker icon
+.timepicker-field {
+	.form-control {
+		background-image: url("data:image/svg+xml,%3Csvg width='16' height='18' viewBox='0 0 16 18' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M9.25 9.75H10.375V11.865L12.205 12.9225L11.6425 13.8975L9.25 12.5175V9.75ZM12.25 6H1.75V14.25H5.2525C4.93 13.5675 4.75 12.8025 4.75 12C4.75 10.6076 5.30312 9.27225 6.28769 8.28769C7.27225 7.30312 8.60761 6.75 10 6.75C10.8025 6.75 11.5675 6.93 12.25 7.2525V6ZM1.75 15.75C0.9175 15.75 0.25 15.075 0.25 14.25V3.75C0.25 2.9175 0.9175 2.25 1.75 2.25H2.5V0.75H4V2.25H10V0.75H11.5V2.25H12.25C12.6478 2.25 13.0294 2.40804 13.3107 2.68934C13.592 2.97064 13.75 3.35217 13.75 3.75V8.325C14.68 9.27 15.25 10.5675 15.25 12C15.25 13.3924 14.6969 14.7277 13.7123 15.7123C12.7277 16.6969 11.3924 17.25 10 17.25C8.5675 17.25 7.27 16.68 6.325 15.75H1.75ZM10 8.3625C9.03527 8.3625 8.11006 8.74573 7.4279 9.4279C6.74573 10.1101 6.3625 11.0353 6.3625 12C6.3625 14.01 7.99 15.6375 10 15.6375C10.4777 15.6375 10.9507 15.5434 11.392 15.3606C11.8333 15.1778 12.2343 14.9099 12.5721 14.5721C12.9099 14.2343 13.1778 13.8333 13.3606 13.392C13.5434 12.9507 13.6375 12.4777 13.6375 12C13.6375 9.99 12.01 8.3625 10 8.3625Z' fill='%23525967'/%3E%3C/svg%3E%0A");
+		background-repeat: no-repeat;
+		background-position: calc(100% - 14px) center;
+	}
+}
+
+// for time picker only
+.tempus-dominus-widget {
+	--arow-color: var(--color-white);
+
+	[title*='Increment'],
+	[title*='Decrement'] {
+		background-image: url("data:image/svg+xml,%3Csvg width='9' height='5' viewBox='0 0 9 5' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4.50002 5C4.65722 5 4.8144 4.93998 4.93426 4.82018L8.7058 1.0486C8.94572 0.808678 8.94572 0.419689 8.7058 0.179867C8.46598 -0.0599557 8.07707 -0.0599557 7.83713 0.179867L4.50002 3.51717L1.16289 0.179983C0.922966 -0.0598398 0.534094 -0.0598398 0.294291 0.179983C0.0542545 0.419805 0.0542545 0.808793 0.29429 1.04871L4.06578 4.8203C4.18569 4.94011 4.34287 5 4.50002 5Z' fill='%235E6374'/%3E%3C/svg%3E%0A");
+		background-repeat: no-repeat;
+		background-position: center;
+	}
+
+	[title*='Increment']:hover,
+	[title*='Decrement']:hover {
+		background-image: url("data:image/svg+xml,%3Csvg width='9' height='5' viewBox='0 0 9 5' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4.50002 5C4.65722 5 4.8144 4.93998 4.93426 4.82018L8.7058 1.0486C8.94572 0.808678 8.94572 0.419689 8.7058 0.179867C8.46598 -0.0599557 8.07707 -0.0599557 7.83713 0.179867L4.50002 3.51717L1.16289 0.179983C0.922966 -0.0598398 0.534094 -0.0598398 0.294291 0.179983C0.0542545 0.419805 0.0542545 0.808793 0.29429 1.04871L4.06578 4.8203C4.18569 4.94011 4.34287 5 4.50002 5Z' fill='%235E6374'/%3E%3C/svg%3E%0A") !important;
+		background-repeat: no-repeat !important;
+		background-position: center !important;
+	}
+
+	[title*='Increment'] {
+		transform: rotate(180deg);
+	}
+
+	.time-container {
+		margin: 0;
+	}
+
+	button[title='Toggle Period'] {
+		background-color: var(--color-primary);
+		font-weight: 500;
+		font-size: 13px;
+		line-height: 13px;
+		color: #ffffff;
+		border: 0;
+		border-radius: 6px;
+		padding: 14px 10px 12px 10px;
+	}
+
+	.arrow {
+		&::before {
+			box-sizing: border-box;
+		}
+	}
+
+	&[data-popper-placement^='top'] > .arrow {
+
+		&::before {
+			border-color: transparent var(--arow-color) var(--arow-color) transparent;
+		}
+	}
+
+	&[data-popper-placement^='bottom'] > .arrow {
+
+		&::before {
+			border-color: var(--arow-color) transparent transparent var(--arow-color);
+		}
+	}
+
+	&[data-popper-placement^='left'] > .arrow {
+		right: 5px;
+
+		&::before {
+			border-color: var(--arow-color) var(--arow-color) transparent transparent;
+		}
+	}
+
+	&[data-popper-placement^='right'] > .arrow {
+		&::before {
+			border-color: transparent transparent var(--arow-color) var(--arow-color);
+		}
+	}
+}

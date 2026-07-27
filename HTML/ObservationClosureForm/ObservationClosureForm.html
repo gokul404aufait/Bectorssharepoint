@@ -1,0 +1,100 @@
+
+<script type="text/javascript" src="/sites/Mrs_Bectors_PTMS/BectorsSourceCode/JS/CommonJS/libraries/sppeoplepicker.min.js"></script>
+<script type="text/javascript" src="/sites/Mrs_Bectors_PTMS/BectorsSourceCode/JS/ObservationClosureForm/ObservationClosureFormDAL.js"></script>
+<script type="text/javascript" src="/sites/Mrs_Bectors_PTMS/BectorsSourceCode/JS/ObservationClosureForm/ObservationClosureFormBAL.js"></script>
+<script type="text/javascript" src="/sites/Mrs_Bectors_PTMS/BectorsSourceCode/JS/ObservationClosureForm/Upload.js"></script>
+
+
+<input type="hidden" id="hdnClosureAttachmentsID">
+<input type="hidden" id="hdnClosureID">
+
+
+<div class="ptms-inner-section pd-0">
+		<div class="container-fluid">
+			<h6 class="inner-heading mb-2" id="DepartmentNameId"></h6>
+			<div>
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="inputWhere">Where</label>
+						<input type="text" class="form-control" id="CiteriaId" readonly>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="inputCategory">Category</label>
+						<input type="text" class="form-control" id="Categorytxt" readonly>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="inputWhat">What</label>
+						<textarea type="text" class="form-control" id="whatId" placeholder="" disabled></textarea>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="inputObservation">Observation</label>
+						<textarea type="text" class="form-control" id="ObservationId" disabled></textarea>
+					</div>
+
+					<div class="form-group col-md-6">
+						<label for="inputSeverity">Near Miss</label>
+						<input type="checkbox" id="chkSeverity" disabled="disabled">
+						<br/>
+						<label for="inputSeverity">Type Of Observation</label>
+						<input type="text" class="form-control" id="Actiontxt" readonly style="height:auto;">
+                   </div>
+					<div class="form-group col-md-6">
+						<label for="inputCorrective" >Corrective Action</label>
+						<textarea type="text" class="form-control" id="CorrectiveActiontxt"></textarea>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="inputObserved">Observed On</label>
+						<input type="text"  id="observationDateId" class="form-control" readonly>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="inputObservedBy">Observed By</label>
+						<input type="text" class="form-control" id="observedById" readonly>
+					</div>
+				<div class="attachment">
+					<label for="inputAttachement">Attachments</label>
+                  <div id="ObservationAttachmentId"></div>
+			</div>
+					<hr class="full-width">
+					<div class="form-group col-md-6">
+						<label for="inputClosedBy">Closed By</label>
+						<input type="text" class="form-control" id="ClosedByTxt" readonly>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="inputClosureComment">Closure Comment<span style="color:red">*</span></label>
+						<textarea type="text" class="form-control" id="ClosureCommentId" ></textarea>
+					</div>
+					
+						<div class="form-group col-md-12" id="AttachmentdivId">
+						<div class="heading-tbl">Attachments</div>
+						<div>
+						<div class="attachment">
+						<div class="attachment-img"><img src="/sites/Mrs_Bectors_PTMS/BectorsSourceCode/Images/plus.png"><label>choose the file</label></div>
+						<input type="file" class="form-control-file" id="ClosureFormIds" onchange="AttachmentClickFunction(this)">
+						
+						 <div id="ClosureFormId"></div>
+
+						<input style="display:none" id="Dept___PlantDepartmentID___Cat___CategoryID___Crit___CriteriaID___ObserId" value="0">
+						
+						</div>
+						</div>
+						</div>
+						<br/>
+					<div class="btn-section left-pdg" id="closebuttId">
+						<!--<button type="button" class="btn" id="closeButtonId" onclick="">Close</button>-->
+					</div>
+					<div class="btn-section left-pdg">
+					<button type="button" class="btn" id="CloseBtn" onclick="UpdateClosureDetails()">Close</button>
+					<button type="button" class="btn" id="CancelBtn" onclick="GotoHome()">Cancel</button>
+			 		 </div>
+
+
+
+				</div>
+			</div>
+		
+
+			
+
+		</div>
+	</div>
+		

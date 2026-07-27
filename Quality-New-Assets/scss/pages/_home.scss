@@ -1,0 +1,205 @@
+.plan-tour-content {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  max-height: 100dvh;
+}
+
+.plan-tour-header {
+  background-color: #F4F5F6;
+  padding: 24px 40px;
+  border-bottom: 1px solid #DFDFDF;
+
+  .tour-header-info-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+
+  .tour-header-title {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.3;
+    color: #0C0D10;
+  }
+
+  .tour-header-description {
+    color: #1A1A1A;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  .card-toggle-text-btn,
+  .bs-menu-parent {
+    margin-left: auto;
+  }
+
+  .plan-tour-summary-wrapper {
+    margin-top: 24px;
+  }
+}
+
+.plan-tour-body {
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+  max-height: 100%;
+  display: flex;
+  min-height: 100%;
+  padding: 24px 40px;
+
+  .bs-nav-tabs-header {
+    position: sticky;
+    top: 0;
+  }
+
+  .bs-tab-wrapper {
+    min-width: 0;
+    flex: 1;
+    padding: 0 16px;
+    overflow: auto;
+  }
+}
+
+.tour-cycle-card-panel-lists {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  .tour-cycle-panel {
+    &:has(.tour-cyle-step-start.bs-fade-active) {
+      .bs-card-toggler-btn {
+        display: none;
+      }
+    }
+  }
+}
+
+.tour-cyle-info-form {
+  --grid-columns: 2;
+  --grid-gap: 20px 16px;
+  @include grid-layout;
+
+  .form-footer {
+    grid-column: span 2;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 4px;
+  }
+}
+
+.tour-cyle-start-info {
+  --grid-columns: 5;
+  --grid-gap: 20px 32px;
+  @include grid-layout;
+  background-color: #E2F1FD;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(10, 106, 182, 0.50);
+
+  .start-info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .item-label {
+    color: #5B616E;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.3;
+  }
+
+  .item-value {
+    color: #0C0D10;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .bs-menu-parent {
+    margin: auto 0 auto auto;
+  }
+
+  .bs-menu-opener {
+    --btn-hover-bg-color: #C1DFF7;
+  }
+}
+
+.tour-cyle-step-completed {
+  .tour-cyle-card-lists {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+.submission-result-sec {
+  display: flex;
+
+  .submission-result-wrapper {
+    &:not(:last-child) {
+      padding-right: 32px;
+      border-right: 1px solid #DFDFDF;
+      margin-right: 32px;
+    }
+  }
+
+  .submission-result-lists {
+    display: flex;
+    gap: 12px;
+    margin-top: 12px;
+
+    .list-item {
+      color: #0C0D10;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+  }
+}
+
+.tour-cycle-estimation-lists {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  .tour-cycle-estimation-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-left: auto;
+  }
+
+  .cycle-estimation-action-elem {
+    cursor: pointer;
+  }
+
+  .estimation-not-okay-wrapper {
+    --grid-columns: 2;
+    --grid-gap: 24px 16px;
+    @include grid-layout;
+
+    .estimation-item-category {
+      grid-column: span 2;
+    }
+  }
+}
+
+.tour-cycle-estimation-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+
+.shift-popup {
+  --popup-width-max: max(60%, 440px);
+}
+
+.tour-cycle-start-popup {
+  --popup-width-min: 816px;
+}

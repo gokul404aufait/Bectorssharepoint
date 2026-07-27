@@ -1,0 +1,86 @@
+.badge {
+  --badge-color-bg: var(--color-white);
+  --badge-color-font: #344054;
+  --badge-font-size: 14px;
+  --badge-font-weight: 500;
+  --badge-font-family: var(--base-font-family);
+  --badge-padding: 2px 10px 2px 8px;
+  --badge-color-border: var(--color-border-secondary);
+  --badge-border-radius: 16px;
+  --badge-dot-size: 8px;
+  --badge-dot-color-bg: #667085;
+  --badge-dot-color-border: va(--badge-dot-color-bg);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background-color: var(--badge-color-bg);
+  font-family: var(--badge-font-family);
+  font-weight: var(--badge-font-weight);
+  color: var(--badge-color-font);
+  font-size: var(--badge-font-size);
+  line-height: 1.4;
+  border: 1px solid var(--badge-color-border);
+  border-radius: var(--badge-border-radius);
+  padding: var(--badge-padding);
+  transition: all .4s;
+
+
+  &::before {
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+  }
+
+  &::before {
+    content: '';
+    width: var(--badge-dot-size);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background-color: var(--badge-dot-color-bg);
+    border: 1px solid var(--badge-dot-color-border);
+    transition: all .4s;
+  }
+
+  &-lg {
+    --badge-border-radius: 35px;
+    --badge-font-size: 13px;
+    --badge-font-weight: 600;
+    --badge-padding: 8px 12px 8px 8px;
+    --badge-dot-size: 16px;
+  }
+}
+
+.badge-success {
+  --badge-color-font: var(--color-text-primary);
+  --badge-color-border: var(--color-success-light);
+  --badge-dot-color-bg: transparent;
+  --badge-dot-color-border: var(--color-success);
+
+  &.badge-fill {
+    --badge-color-font: var(--color-success);
+    --badge-color-bg: var(--color-success-lighter);
+    --badge-dot-color-bg: var(--color-success);
+
+    &::before {
+      background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='16' height='16' rx='8' fill='%23067661'/%3E%3Cpath d='M12 5L6.5 10.5L4 8' stroke='white' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
+    }
+  }
+}
+
+.badge-error {
+  --badge-color-font: var(--color-text-primary);
+  --badge-color-border: var(--color-error-light);
+  --badge-dot-color-bg: transparent;
+  --badge-dot-color-border: var(--color-error);
+
+  &.badge-fill {
+    --badge-color-font: var(--color-error);
+    --badge-color-bg: var(--color-error-lighter);
+    --badge-dot-color-bg: var(--color-error);
+
+    &::before {
+      background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='16' height='16' rx='8' /%3E%3Cpath d='M11 5L5 11M5 5L11 11' stroke='white' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
+    }
+  }
+}

@@ -1,0 +1,70 @@
+<script src="/sites/Mrs_Bectors_PTMS/BectorsSourceCode/JS/Inner Pages/Observations Report/ObservationReportsDAL.js"></script>
+<script src="/sites/Mrs_Bectors_PTMS/BectorsSourceCode/JS/Inner Pages/Observations Report/ObservationReportsBAL.js"></script>
+
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+/>
+
+<div class="container-fluid">
+  <div class="DashboardTable table-container" id="tblOpenObservationInner">
+    <div
+      class="selection-sector d-flex align-items-center justify-content-between gap-3 mb-20"
+    >
+      <h3 class="bec-fs-lg text-dark">All Observations</h3>
+
+      <div class="d-flex align-items-center gap-3">
+        <div class="form-group">
+          <select
+            id="StatusdrpId"
+            class="form-select"
+            onchange="drpDepartmentChangefun()"
+          >
+            <option value="All">Status</option>
+            <option value="Pending">Pending</option>
+            <option value="NA">Not Applicable</option>
+            <option value="Closed">Closed</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <select
+            id="ActiondrpId"
+            class="form-select"
+            onchange="drpDepartmentChangefun()"
+          >
+            <option value="All">Action</option>
+            <option value="NA">Not Applicable</option>
+            <option value="Approved">Approved</option>
+            <option value="Rejected">Rejected</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <select
+            id="SaverityDropDownId"
+            class="form-select"
+            onchange="drpDepartmentChangefun()"
+          >
+            <option value="All">All Severity</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <select
+            id="InnerDepartmentDropDownId"
+            class="form-select"
+            onchange="drpDepartmentChangefun()"
+          >
+            <option value="All">All Department</option>
+          </select>
+        </div>
+        <button type="button" class="btn btn-outline-secondary btn-sm">
+          <img
+            src="/sites/Mrs_Bectors_PTMS/BectorsSourceCode/Images/reload.svg"
+            class="tour-score-reset-img"
+            onclick="ResetAllSelection()"
+          />
+        </button>
+      </div>
+    </div>
+    <div class="table-responsive" id="divtblObservationsReport"></div>
+  </div>
+</div>

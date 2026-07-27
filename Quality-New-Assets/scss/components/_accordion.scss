@@ -1,0 +1,108 @@
+.accordion-lists {
+  --accordion-gap: 40px;
+  --accordion-toggle-icon-size: 42px;
+  --accordion-content-padding-right: 70px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--accordion-gap);
+
+  @include mq(phone) {
+    --accordion-gap: 32px;
+    --accordion-toggle-icon-size: 34px;
+    --accordion-content-padding-right: 20px;
+  }
+
+  .accordion-item {
+
+    &.is-hidden {
+      display: none;
+    }
+
+    &:not(:last-child) {
+      padding-bottom: var(--accordion-gap);
+      border-bottom: 1px solid #DDD;
+    }
+
+    &.is-active {
+      .accordion-toggle-icon {
+        --accordion-toggle-icon-color: #5F249F;
+        background-color: var(--accordion-toggle-icon-color);
+
+        &::before {
+          background-color: var(--accordion-toggle-icon-color);
+          transform: rotate(90deg);
+        }
+
+        &::after {
+          background-color: var(--color-white);
+          transform: rotate(360deg);
+        }
+      }
+    }
+  }
+
+  .accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+  }
+
+  .accordion-toggle-icon {
+    --accordion-toggle-icon-color: #414141;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: var(--accordion-toggle-icon-size);
+    aspect-ratio: 1;
+    border: 1.25px solid var(--accordion-toggle-icon-color);
+    border-radius: 50%;
+    transition: all .45s;
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      width: 14px;
+      height: 1px;
+      background-color: var(--accordion-toggle-icon-color);
+      transition: all .45s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    }
+
+    &::after {
+      transform: rotate(90deg);
+    }
+  }
+
+  .accordion-title {
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    line-height: 1.15;
+
+    @include mq(phone) {
+      font-size: 20px;
+    }
+  }
+
+  .accordion-body {
+    max-height: 0;
+    padding-right: calc(var(--accordion-toggle-icon-size) + var(--accordion-content-padding-right));
+    overflow: hidden;
+    transition: max-height .3s;
+
+    & > * {
+      &:first-child {
+        margin-top: 24px;
+      }
+    }
+  }
+
+  .accordion-body-text {
+    font-size: 16px;
+    color: var(--color-text-primary);
+    line-height: 1.3;
+  }
+}

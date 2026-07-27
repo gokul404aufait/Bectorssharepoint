@@ -1,0 +1,88 @@
+
+<script type="text/javascript" src="/sites/Mrs_Bectors_PTMS/BectorsSourceCode/JS/CommonJS/libraries/sppeoplepicker.min.js"></script>
+<script type="text/javascript" src="/sites/Mrs_Bectors_PTMS/BectorsSourceCode/JS/ObservationClosureForm/ObservationClosureFormDAL.js"></script>
+<script type="text/javascript" src="/sites/Mrs_Bectors_PTMS/BectorsSourceCode/JS/ObservationClosureForm/ObservationClosureFormBAL.js"></script>
+<script type="text/javascript" src="/sites/Mrs_Bectors_PTMS/BectorsSourceCode/JS/ObservationClosureForm/Upload.js"></script>
+
+
+<input type="hidden" id="hdnClosureAttachmentsID">
+
+
+<div class="ptms-inner-section">
+		<div class="container">
+			<h6 class="inner-heading">Mould Shop</h6>
+			<div>
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="inputWhere">Where</label>
+						<input type="email" class="form-control" id="CiteriaId" readonly>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="inputCategory">Category</label>
+						<select id="inputState" class="form-control" disabled="true">
+							<option selected="">Perfomance</option>
+							<option>...</option>
+						</select>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="inputWhat">What</label>
+						<textarea type="text" class="form-control" id="whatId" placeholder="" readonly></textarea>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="inputObservation">Observation</label>
+						<textarea type="text" class="form-control" id="ObservationId" readonly></textarea>
+					</div>
+
+					<div class="form-group col-md-6">
+						<label for="inputSeverity">Severity</label>
+						<select id="SeverityDDId" class="form-control" disabled="true">
+							<option selected="" >Near Miss</option>
+							<option>...</option>
+						</select>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="inputCorrective">Corrective Action</label>
+						<textarea type="text" class="form-control" id="CorrectiveActionId"></textarea>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="inputObserved">Observed On</label>
+						<input type="text" class="" id="observationDateId" readonly>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="inputObservedBy">Observed By</label>
+						<input type="text" class="form-control" id="observedById" readonly>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="inputClosedBy">Closed By</label>
+						<input type="text" class="form-control" id="ClosedById" readonly>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="inputClosureComment">Closure Comment</label>
+						<textarea type="text" class="form-control" id="ClosureCommentId"></textarea>
+					</div>
+					
+					<div class="btn-section left-pdg" id="closebuttId">
+						<!--<button type="button" class="btn" id="closeButtonId" onclick="">Close</button>-->
+					</div>
+					<div class="btn-section left-pdg">
+					<button type="button" class="btn ">cancel</button>
+			 		 </div>
+
+
+
+				</div>
+			</div>
+			<div class="attachment">
+				<div class="attachment-img"><img src="/sites/Mrs_Bectors_PTMS/BectorsSourceCode/Images/plus-sign.png" id="AttachementDivId"><label>Attachements</label></div>
+
+				<input type="file" class="form-control initiator-Edit" id="ClosureFormAttachementId" style="width: 100%;display: inline-block;">
+
+				<div id="ClosureFormId"></div>
+			</div>
+
+			
+
+		</div>
+	</div>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

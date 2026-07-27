@@ -1,0 +1,53 @@
+@mixin hide-scroll {
+	& {
+		scrollbar-width: none;
+	}
+}
+
+@mixin allow-scroll {
+	overflow-x: auto;
+	scroll-snap-type: x mandatory;
+	scroll-behavior: smooth;
+
+	> * {
+		touch-action: pan-x;
+		scroll-snap-align: start;
+	}
+}
+
+@mixin scroll-gap-x {
+	padding-inline: var(--layout-container-gap);
+	margin-inline: calc(var(--layout-container-gap) * -1);
+	scroll-padding: var(--layout-container-gap);
+
+	@include hide-scroll;
+}
+
+// Grid Layout
+@mixin grid-layout($columns: var(--grid-columns, 2), $gap: var(--grid-gap)) {
+	display: grid;
+	grid-template-columns: repeat($columns, 1fr);
+	gap: $gap;
+}
+
+
+
+// Ellipsis
+@mixin truncate($line: 1, $truncation-boundary: 100%) {
+	max-width: $truncation-boundary;
+	min-width: 0;
+	-webkit-line-clamp: $line;
+	-webkit-box-orient: vertical;
+
+	@if $line ==1 {
+		white-space: nowrap;
+	}
+
+	@else {
+		display: -webkit-box;
+		white-space: normal;
+	}
+
+	overflow: hidden;
+	text-overflow: ellipsis;
+}

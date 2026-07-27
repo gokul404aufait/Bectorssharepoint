@@ -1,0 +1,15 @@
+@use "sass:math";
+
+// Function to handle both px values and CSS variables
+@function rem($pixels, $context: 16) {
+
+  // If the value is a number, calculate the rem
+  @if type-of($pixels)==number {
+    @return (math.div($pixels, $context)) * 1rem;
+  }
+
+  @else {
+    // For CSS variables, use calc and let the browser handle it
+    @return calc(#{$pixels} / #{$context} * 1rem);
+  }
+}

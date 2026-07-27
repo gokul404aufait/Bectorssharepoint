@@ -1,0 +1,97 @@
+// padding & margin reset values
+.p-0 {
+  padding: 0 !important;
+}
+
+.m-0 {
+  margin: 0 !important;
+}
+
+// // This mixin generates CSS padding classes for different padding values.
+// // Usage example: @include padding(0, 4, 8, 12, 16);
+// @mixin padding($values...) {
+//   @each $value in $values {
+//     .pt-#{$value} {
+//       padding-top: #{if($value == 0, 0, $value + 'px')} !important;
+//     }
+
+//     .pr-#{$value} {
+//       padding-right: #{if($value == 0, 0, $value + 'px')} !important;
+//     }
+
+//     .pb-#{$value} {
+//       padding-bottom: #{if($value == 0, 0, $value + 'px')} !important;
+//     }
+
+//     .pl-#{$value} {
+//       padding-left: #{if($value == 0, 0, $value + 'px')} !important;
+//     }
+//   }
+// }
+
+// // This mixin generates CSS margin classes for different margin values.
+// // Usage example: @include margin(0, 4, 8, 12, 16);
+// @mixin margin($values...) {
+//   @each $value in $values {
+//     .mt-#{$value} {
+//       margin-top: #{if($value == 0, 0, $value + 'px')} !important;
+//     }
+
+//     .mr-#{$value} {
+//       margin-right: #{if($value == 0, 0, $value + 'px')} !important;
+//     }
+
+//     .mb-#{$value} {
+//       margin-bottom: #{if($value == 0, 0, $value + 'px')} !important;
+//     }
+
+//     .ml-#{$value} {
+//       margin-left: #{if($value == 0, 0, $value + 'px')} !important;
+//     }
+//   }
+// }
+
+// // This mixin generates CSS column gap classes for different column gap values.
+// // Usage example: @include columnGap(0, 4, 8, 12, 16);
+// @mixin columnGap($values...) {
+//   @each $value in $values {
+//     .column-gap-#{$value} {
+//       column-gap: #{if($value == 0, 0, $value + 'px')} !important;
+//     }
+//   }
+// }
+
+// // This mixin generates CSS row gap classes for different row gap values.
+// // Usage example: @include rowGap(0, 4, 8, 12, 16);
+// @mixin rowGap($values...) {
+//   @each $value in $values {
+//     .row-gap-#{$value} {
+//       row-gap: #{if($value == 0, 0, $value + 'px')} !important;
+//     }
+//   }
+// }
+
+
+// $values: 0, 2, 4, 8, 12, 16, 18, 20;
+
+// @include columnGap($values...);
+// @include rowGap($values...);
+// @include padding($values...);
+// @include margin($values...);
+
+// margin auto values
+.mt-auto {
+  margin-top: auto !important;
+}
+
+.mr-auto {
+  margin-right: auto !important;
+}
+
+.mb-auto {
+  margin-bottom: auto !important;
+}
+
+.ml-auto {
+  margin-left: auto !important;
+}

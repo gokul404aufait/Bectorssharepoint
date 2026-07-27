@@ -1,0 +1,199 @@
+body {
+  font-size: .875rem;
+}
+
+:root {
+  --loader-bar-bg: #0A6AB6;
+  --page-bg: #FFFFFF;
+  --loader-bar-width: 10px;
+}
+
+.Loader {
+  position: fixed;
+  inset: 0;
+  width: 76px;
+  z-index: 999;
+  aspect-ratio: 1;
+  background: conic-gradient(
+    transparent,
+    transparent 12%,
+    var(--loader-bar-bg)
+  );
+  border-radius: 50%;
+  margin: auto;
+  animation: spin 1.1s linear infinite;
+}
+
+.Loader::before,
+.Loader::after {
+  content: "";
+  position: absolute;
+  border-radius: inherit;
+}
+
+.Loader::before {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(
+    to left,
+    var(--loader-bar-bg) 50%,
+    transparent 50%
+  );
+  width: var(--loader-bar-width);
+  aspect-ratio: 1;
+}
+
+.Loader::after {
+  inset: var(--loader-bar-width);
+  background: var(--page-bg);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+
+#s4-titlerow
+{
+ display:none!important 
+}
+#sp_Ribbon
+{
+display:none!important 
+}
+
+.ms-metadata.ms-verticalAlignMiddle{
+/*display:none!important */
+
+}
+
+.ms-navedit-editLinksIconWrapper.ms-verticalAlignMiddle{
+ /*display:none!important */	
+ 
+}
+
+.navbar-brand img{
+width:180px;
+}
+
+#contentRow {
+   padding-top: 0; 
+}
+
+.collapse:not(.show) {
+ display:block !important 
+ }
+ 
+.custom-select {
+  display: inline-block;
+  width: 200px;
+  height: calc(1.5em + .75rem + 2px);
+  padding: .375rem 1.75rem .375rem .75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  vertical-align: middle;
+  /* background: #fff url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='4' heig…0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e) no-repeat right .75rem center/8px 10px;); */
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+.dataTables_info{
+display: none;
+}
+.dataTables_length{
+display: none !important;
+}
+.tblTourScores span#deptLbl{
+text-transform:capitalize;
+padding: 5px;
+font-weight: 200;
+background: transparent;
+border-left: 3px solid #f03631;
+cursor: default;
+user-select: none;
+}
+
+.dataTables_filter{
+display: none !important;
+}
+.tblTourScores thead tr#tsSearch{
+border: none !important;
+outline: 0 !important;
+}
+.tblTourScores,
+.tblTourScores tr td{
+border: 1px solid #efefef !important;
+}
+.tblTourScores thead{
+background: rgba(239,239,239,1);
+background: -moz-linear-gradient(top, rgba(239,239,239,1) 0%, rgba(246,246,246,1) 53%, rgba(255,255,255,1) 100%);
+background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(239,239,239,1)), color-stop(53%, rgba(246,246,246,1)), color-stop(100%, rgba(255,255,255,1)));
+background: -webkit-linear-gradient(top, rgba(239,239,239,1) 0%, rgba(246,246,246,1) 53%, rgba(255,255,255,1) 100%);
+background: -o-linear-gradient(top, rgba(239,239,239,1) 0%, rgba(246,246,246,1) 53%, rgba(255,255,255,1) 100%);
+background: -ms-linear-gradient(top, rgba(239,239,239,1) 0%, rgba(246,246,246,1) 53%, rgba(255,255,255,1) 100%);
+background: linear-gradient(to bottom, rgba(239,239,239,1) 0%, rgba(246,246,246,1) 53%, rgba(255,255,255,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#efefef', endColorstr='#ffffff', GradientType=0 );
+}
+.tblTourScores tr#tblHead{
+font-weight:200 !important;
+cursor: default;
+user-select: none;
+}
+.paginate_button{
+padding: 0.1em 0.5em !important;
+}
+
+/*li.static>span.static {
+  background-color: #ef3834 !important;
+  border: 1px solid #fff;
+  color: #fff;
+}
+*/
+
+.h4, h4 {
+  font-size: 18px;
+}
+
+#s4-bodyContainer {
+  padding: 0;
+}
+@media (max-width: 991.98px) {
+    .ptms-dashboard-section {
+        padding-left: 60px !important;
+    }
+    .sidebar {
+        z-index: 9999 !important;
+    }
+    .sidebar-container:not(.collapsed) {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0px !important;
+    }
+    .mobile-open {
+        max-width: 68px !important;
+        min-width: 68px !important;
+        width: 100% !important;
+    }
+    #shiftPopup{
+        z-index: 10000 !important;
+    }
+    .ptms-form-section {
+         padding-left: 75px !important;
+    }
+}
+.select2-container .select2-dropdown {
+  z-index: 1050 !important; /* Ensure it's above modal */
+}
+
+.select2-results__options {
+  max-height: 200px;  /* Set the height limit */
+  overflow-y: auto !important; /* Make it scrollable */
+}
+

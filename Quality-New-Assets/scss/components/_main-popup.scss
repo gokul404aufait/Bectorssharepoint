@@ -1,0 +1,114 @@
+body {
+  --main-popup-z-index: 302;
+
+  &:has(.is-popup-active) {
+    overflow: hidden;
+  }
+}
+
+.main-popup {
+  --popup-width-min: 440px;
+  --popup-width-max: 100%;
+  --popup-floating-value: 35px;
+  --popup-border-radius: 12px;
+  --popup-padding: 20px;
+  --popup-content-gap: 20px;
+  --popup-body-outer-space: 4px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  min-width: 100vw;
+  min-height: 100svh;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  z-index: var(--main-popup-z-index);
+  transition: all .4s;
+
+  .popup-bg {
+    background-color: var(--color-black);
+    position: absolute;
+    inset: 0;
+    opacity: 0.66;
+  }
+
+  .popup-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100svh;
+    max-height: 100svh;
+    margin-top: calc(-1 * var(--popup-floating-value));
+    overflow: hidden;
+    transition: all .4s;
+  }
+
+  .popup-common-box {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-white);
+    min-width: min(calc(100% - (var(--popup-content-gap) * 2) - (var(--popup-padding) * 2)), var(--popup-width-min));
+    max-width: calc(var(--popup-width-max) - (var(--popup-padding) * 2));
+    padding: var(--popup-padding);
+    margin: var(--popup-content-gap);
+    border-radius: var(--popup-border-radius);
+    overflow: hidden;
+    transition: all .4s;
+  }
+
+  .popup-header {
+    position: sticky;
+    top: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background-color: #fff;
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+  }
+
+  .popup-body {
+    min-width: 0;
+    flex: 1;
+    padding-inline: var(--popup-body-outer-space);
+    margin-inline: calc(var(--popup-body-outer-space) * -1);
+    overflow-y: auto;
+  }
+
+  .popup-footer {
+    position: sticky;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    background-color: #fff;
+    padding-top: 12px;
+    margin-top: 12px;
+  }
+
+  .popup-header-title {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.3;
+    margin-right: auto;
+  }
+
+  .popup-close-btn {
+    --btn-padding: 0;
+    --btn-border-radius: 50%;
+    --btn-hover-bg-color: #F0F1F2;
+    min-width: 24px;
+    aspect-ratio: 1;
+    border: 0;
+  }
+
+  &.is-popup-active {
+    --popup-floating-value: 0;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
+  }
+}
