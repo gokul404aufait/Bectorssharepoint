@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Area Line Clearance (Rajpura)</title>
+    <!-- Original Global CSS -->
+  <link rel="stylesheet" href="/sites/Mrs_Bectors_PTMS/BectorsSourceCode/Quality-New-Assets/css/main.min.css">
+    <link rel="stylesheet" href="/sites/Mrs_Bectors_PTMS/BectorsSourceCode/Quality-New-Assets/css/home-page.min.css">
+    <link rel="stylesheet" href="/sites/Mrs_Bectors_PTMS/BectorsSourceCode/Quality-New-Assets/css/style.css">
+    <!-- Common Rajpura CSS -->
+    <link rel="stylesheet" href="../common/css/global.css">
+    <!-- Component Specific CSS -->
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+    <main class="plan-tour-content">
+        <div class="plan-tour-header">
+            <div class="tour-header-info-wrapper">
+                <h3 class="tour-header-title">AREA LINE CLEARANCE OR CHANGEOVER CHECKLIST (RAJPURA)</h3>
+                <span class="badge" id="shiftBadge">Shift 1</span>
+                <span class="tour-date" id="currentDay">--/--/----</span>
+
+                <div class="bs-menu-parent">
+                    <button type="button" class="bs-btn icon-btn bs-menu-opener">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                            <path d="M7.56043 9.00004C7.56043 9.79533 8.20514 10.44 9.00043 10.44C9.79572 10.44 10.4404 9.79533 10.4404 9.00004C10.4404 8.20475 9.79572 7.56004 9.00043 7.56004C8.20514 7.56004 7.56043 8.20475 7.56043 9.00004Z" fill="#0C0D10" />
+                            <path d="M7.56043 13.59C7.56043 14.3853 8.20514 15.03 9.00043 15.03C9.79572 15.03 10.4404 14.3853 10.4404 13.59C10.4404 12.7947 9.79572 12.15 9.00043 12.15C8.20514 12.15 7.56043 12.7947 7.56043 13.59Z" fill="#0C0D10" />
+                            <path d="M7.56043 4.41002C7.56043 5.20531 8.20514 5.85002 9.00043 5.85002C9.79572 5.85002 10.4404 5.20531 10.4404 4.41002C10.4404 3.61473 9.79572 2.97002 9.00043 2.97002C8.20514 2.97002 7.56043 3.61473 7.56043 4.41002Z" fill="#0C0D10" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="plan-tour-body" style="padding: 15px;">
+            <div class="bs-tab-wrapper bs-tab-wrapper-vertical">
+                <div class="bs-tab-content-wrapper">
+                    <div class="bs-tab-pane bs-tab-active bs-fade-in" data-tab="main-tab-cbb">
+                        <div class="tour-cycle-card-panel-lists">
+                            
+            <!-- HEADER INFORMATION SECTION -->
+            <div class="bs-card-toggler bs-card bs-card-secondary tour-cycle-panel bs-card-toggler-is-active" style="margin-bottom: 20px;">
+                <div class="bs-card-header">
+                    <h4 class="bs-card-title">Checklist Information</h4>
+                </div>
+                <div class="bs-card-body" style="max-height: none !important; height: auto !important; overflow: visible !important; display: block !important;">
+                    <div class="tour-cyle-step tour-cyle-step-start bs-fade-elem bs-fade-active bs-fade-in" style="display: block; padding: 15px;">
+                        <div class="tour-cyle-info-form">
+                            <div class="form-group">
+                                <label class="form-label">Date</label>
+                                <input type="text" class="form-control" id="header-date" disabled value="Auto Date">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Time</label>
+                                <input type="text" class="form-control" id="header-time" disabled value="Auto Time">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Plant</label>
+                                <div class="select2-parent">
+                                    <select class="form-select" id="header-plant">
+                                        <option>Rajpura</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Line</label>
+                                <div class="select2-parent">
+                                    <select class="form-select" id="header-line">
+                                        <option>Select Line</option>
+                                        <option>Line 1</option>
+                                        <option>Line 2</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Shift</label>
+                                <div class="select2-parent">
+                                    <select class="form-select" id="header-shift">
+                                        <option>Shift 1</option>
+                                        <option>Shift 2</option>
+                                        <option>Shift 3</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Shift Executive Production</label>
+                                <input type="text" class="form-control" id="header-exec-prod" placeholder="Enter Name">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Previous Product run on line Name</label>
+                                <div class="select2-parent">
+                                    <select class="form-select" id="header-prev-product">
+                                        <option>Select Product</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">New Product to be run after Change Over</label>
+                                <div class="select2-parent">
+                                    <select class="form-select" id="header-new-product">
+                                        <option>Select Product</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Shift Executive Quality</label>
+                                <input type="text" class="form-control" id="header-exec-qual" placeholder="Enter Name">
+                            </div>
+                        </div>
+                        <div class="tour-cyle-btn-wrapper" style="display: flex; justify-content: flex-end; margin-top: 15px;">
+                            <button type="button" id="submit-alc-btn" onclick="handleALCSubmit()" class="bs-btn bs-btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RM STORE AREA -->
+            <div class="bs-card" style="margin-bottom: 20px;">
+                <div class="bs-card-header">
+                    <h4 class="bs-card-title">RM Store Area (Wheat Flour Handling)</h4>
+                </div>
+                <div class="bs-card-body" style="overflow-x: auto;">
+                    <div class="bs-table-container">
+                        <table class="bs-table" border="1" style="border-collapse: collapse; width: 100%; min-width: 800px; text-align: center; font-size: 14px;">
+                        <thead>
+                            <tr>
+                                <th style="width: 5%;">Sr No.</th>
+                                <th style="width: 60%;">Description</th>
+                                <th style="width: 15%;">Compliance Score</th>
+                                <th style="width: 20%;">Remarks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td style="text-align: left;">Floor Condition - To be cleaned</td>
+                                <td>
+                                    <select class="form-select">
+                                        <option>02</option><option>01</option><option>00</option>
+                                    </select>
+                                </td>
+                                <td><input type="text" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td style="text-align: left;">No scrap at RM storage area</td>
+                                <td>
+                                    <select class="form-select">
+                                        <option>02</option><option>01</option><option>00</option>
+                                    </select>
+                                </td>
+                                <td><input type="text" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td style="text-align: left;">Sign of Infestation, Crawling marks</td>
+                                <td>
+                                    <select class="form-select">
+                                        <option>02</option><option>01</option><option>00</option>
+                                    </select>
+                                </td>
+                                <td><input type="text" class="form-control"></td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FLOUR & SUGAR HANDLING -->
+            <div class="bs-card" style="margin-bottom: 20px;">
+                <div class="bs-card-header">
+                    <h4 class="bs-card-title">Flour & Sugar Handling</h4>
+                </div>
+                <div class="bs-card-body" style="overflow-x: auto;">
+                    <div class="bs-table-container">
+                        <table class="bs-table" border="1" style="border-collapse: collapse; width: 100%; min-width: 800px; text-align: center; font-size: 14px;">
+                        <thead>
+                            <tr>
+                                <th style="width: 5%;">Sr No.</th>
+                                <th style="width: 60%;">Description</th>
+                                <th style="width: 15%;">Compliance Score</th>
+                                <th style="width: 20%;">Remarks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>4</td>
+                                <td style="text-align: left;">Maida and Sugar handling area Cleanliness -Floor, wall, ceiling, railing, cuving</td>
+                                <td>
+                                    <select class="form-select">
+                                        <option>Compliant (2)</option><option>Partial Compliant (1)</option><option>Non-Compliant (0)</option>
+                                    </select>
+                                </td>
+                                <td><input type="text" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td style="text-align: left;">Sieve Condition- free from damage and Cleanliness</td>
+                                <td><select class="form-select"><option>Compliant (2)</option><option>Partial Compliant (1)</option><option>Non-Compliant (0)</option></select></td>
+                                <td><input type="text" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td style="text-align: left;">Magnet Position and cleanliness</td>
+                                <td><select class="form-select"><option>Compliant (2)</option><option>Partial Compliant (1)</option><option>Non-Compliant (0)</option></select></td>
+                                <td><input type="text" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td>7</td>
+                                <td style="text-align: left;">Free from pest</td>
+                                <td><select class="form-select"><option>Compliant (2)</option><option>Partial Compliant (1)</option><option>Non-Compliant (0)</option></select></td>
+                                <td><input type="text" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td>8</td>
+                                <td style="text-align: left;">No damage and loose thread in cotton bellows</td>
+                                <td><select class="form-select"><option>Compliant (2)</option><option>Partial Compliant (1)</option><option>Non-Compliant (0)</option></select></td>
+                                <td><input type="text" class="form-control"></td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CHEMICAL HANDLING AREA -->
+            <div class="bs-card" style="margin-bottom: 20px;">
+                <div class="bs-card-header">
+                    <h4 class="bs-card-title">Chemical Handling Area</h4>
+                </div>
+                <div class="bs-card-body" style="overflow-x: auto;">
+                    <div class="bs-table-container">
+                        <table class="bs-table" border="1" style="border-collapse: collapse; width: 100%; min-width: 800px; text-align: center; font-size: 14px;">
+                        <thead>
+                            <tr>
+                                <th style="width: 5%;">Sr No.</th>
+                                <th style="width: 60%;">Description</th>
+                                <th style="width: 15%;">Compliance Score</th>
+                                <th style="width: 20%;">Remarks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>9</td>
+                                <td style="text-align: left;">All utensils are clean and free from damage</td>
+                                <td><select class="form-select"><option>Compliant (2)</option><option>Partial (1)</option><option>Non-Compliant (0)</option></select></td>
+                                <td><input type="text" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td>10</td>
+                                <td style="text-align: left;">All sieve condition- Free from damage and cleanliness</td>
+                                <td><select class="form-select"><option>Compliant (2)</option><option>Partial (1)</option><option>Non-Compliant (0)</option></select></td>
+                                <td><input type="text" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td>11</td>
+                                <td style="text-align: left;">All Magnets in place and to be clean</td>
+                                <td><select class="form-select"><option>Compliant (2)</option><option>Partial (1)</option><option>Non-Compliant (0)</option></select></td>
+                                <td><input type="text" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td>12</td>
+                                <td style="text-align: left;">All ingredient trollies to be identified</td>
+                                <td><select class="form-select"><option>Compliant (2)</option><option>Partial (1)</option><option>Non-Compliant (0)</option></select></td>
+                                <td><input type="text" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td>13</td>
+                                <td style="text-align: left;">All trollleys to be clean and free from damage</td>
+                                <td><select class="form-select"><option>Compliant (2)</option><option>Partial (1)</option><option>Non-Compliant (0)</option></select></td>
+                                <td><input type="text" class="form-control"></td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MIXING -->
+            <div class="bs-card" style="margin-bottom: 20px;">
+                <div class="bs-card-header">
+                    <h4 class="bs-card-title">Mixing</h4>
+                </div>
+                <div class="bs-card-body" style="overflow-x: auto;">
+                    <div class="bs-table-container">
+                        <table class="bs-table" border="1" style="border-collapse: collapse; width: 100%; min-width: 800px; text-align: center; font-size: 14px;">
+                        <thead>
+                            <tr>
+                                <th style="width: 5%;">Sr No.</th>
+                                <th style="width: 60%;">Description</th>
+                                <th style="width: 15%;">Compliance Score</th>
+                                <th style="width: 20%;">Remarks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>14</td>
+                                <td style="text-align: left;">Check for overall area cleaniness</td>
+                                <td><select class="form-select"><option>Compliant (2)</option><option>Partial (1)</option><option>Non-Compliant (0)</option></select></td>
+                                <td><input type="text" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td>15</td>
+                                <td style="text-align: left;">All gasket to be free from damage</td>
+                                <td><select class="form-select"><option>Compliant (2)</option><option>Partial (1)</option><option>Non-Compliant (0)</option></select></td>
+                                <td><input type="text" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td>16</td>
+                                <td style="text-align: left;">Floor condition - to be clean</td>
+                                <td><select class="form-select"><option>Compliant (2)</option><option>Partial (1)</option><option>Non-Compliant (0)</option></select></td>
+                                <td><input type="text" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td>17</td>
+                                <td style="text-align: left;">Free from scrap accumulation at mixing</td>
+                                <td><select class="form-select"><option>Compliant (2)</option><option>Partial (1)</option><option>Non-Compliant (0)</option></select></td>
+                                <td><input type="text" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td>18</td>
+                                <td style="text-align: left;">No loose nut , bolts , electrical cable,loose tape on floor/ equipment.</td>
+                                <td><select class="form-select"><option>Compliant (2)</option><option>Partial (1)</option><option>Non-Compliant (0)</option></select></td>
+                                <td><input type="text" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td>19</td>
+                                <td style="text-align: left;">All previous running raw material which will not be used in next running variety should be transferred back to rm store.</td>
+                                <td><select class="form-select"><option>Compliant (2)</option><option>Partial (1)</option><option>Non-Compliant (0)</option></select></td>
+                                <td><input type="text" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td>20</td>
+                                <td style="text-align: left;">All hoppers and sprinklinlers should be clean and free from extraneous material.</td>
+                                <td><select class="form-select"><option>Compliant (2)</option><option>Partial (1)</option><option>Non-Compliant (0)</option></select></td>
+                                <td><input type="text" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td>21</td>
+                                <td style="text-align: left;">Dough trollies in use are properly Cleaned</td>
+                                <td><select class="form-select"><option>Compliant (2)</option><option>Partial (1)</option><option>Non-Compliant (0)</option></select></td>
+                                <td><input type="text" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td>22</td>
+                                <td style="text-align: left;">Running variety should be dispalyed on board</td>
+                                <td><select class="form-select"><option>Compliant (2)</option><option>Partial (1)</option><option>Non-Compliant (0)</option></select></td>
+                                <td><input type="text" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td>23</td>
+                                <td style="text-align: left;">Mixer should be clean and free from any left over dough</td>
+                                <td><select class="form-select"><option>Compliant (2)</option><option>Partial (1)</option><option>Non-Compliant (0)</option></select></td>
+                                <td><input type="text" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td>24</td>
+                                <td style="text-align: left;">Rotary Moulder,Cross Over Conveyor and Feed rollers should be cleaned</td>
+                                <td><select class="form-select"><option>Compliant (2)</option><option>Partial (1)</option><option>Non-Compliant (0)</option></select></td>
+                                <td><input type="text" class="form-control"></td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- OVEN -->
+            <div class="bs-card" style="margin-bottom: 20px;">
+                <div class="bs-card-header">
+                    <h4 class="bs-card-title">Oven</h4>
+                </div>
+                <div class="bs-card-body" style="overflow-x: auto;">
+                    <div class="bs-table-container">
+                        <table class="bs-table" border="1" style="border-collapse: collapse; width: 100%; min-width: 800px; text-align: center; font-size: 14px;">
+                        <thead>
+                            <tr>
+                                <th style="width: 5%;">Sr No.</th>
+                                <th style="width: 60%;">Description</th>
+                                <th style="width: 15%;">Compliance Score</th>
+                                <th style="width: 20%;">Remarks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>25</td>
+                                <td style="text-align: left;">Check for overall area cleaniness</td>
+                                <td><select class="form-select"><option>Compliant (2)</option><option>Partial (1)</option><option>Non-Compliant (0)</option></select></td>
+                                <td><input type="text" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td>26</td>
+                                <td style="text-align: left;">Remove all broken from Oven end</td>
+                                <td><select class="form-select"><option>Compliant (2)</option><option>Partial (1)</option><option>Non-Compliant (0)</option></select></td>
+                                <td><input type="text" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td>27</td>
+                                <td style="text-align: left;">All trollies used to be clean and free from damage</td>
+                                <td><select class="form-select"><option>Compliant (2)</option><option>Partial (1)</option><option>Non-Compliant (0)</option></select></td>
+                                <td><input type="text" class="form-control"></td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- POST BAKE & PACKING -->
+            <div class="bs-card" style="margin-bottom: 20px;">
+                <div class="bs-card-header">
+                    <h4 class="bs-card-title">Post Bake & Packing Section</h4>
+                </div>
+                <div class="bs-card-body" style="overflow-x: auto;">
+                    <div class="bs-table-container">
+                        <table class="bs-table" border="1" style="border-collapse: collapse; width: 100%; min-width: 800px; text-align: center; font-size: 14px;">
+                        <thead>
+                            <tr>
+                                <th style="width: 5%;">Sr No.</th>
+                                <th style="width: 60%;">Description</th>
+                                <th style="width: 15%;">Compliance Score</th>
+                                <th style="width: 20%;">Remarks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>28</td><td style="text-align: left;">Check for overall area cleaniness</td><td><select class="form-select"><option>Compliant (2)</option><option>Partial (1)</option><option>Non-Compliant (0)</option></select></td><td><input type="text" class="form-control"></td></tr>
+                            <tr><td>29</td><td style="text-align: left;">Return back all previous laminate/Trays/CBB/Tins and get issued running variety with proper checking</td><td><select class="form-select"><option>Compliant (2)</option><option>Partial (1)</option><option>Non-Compliant (0)</option></select></td><td><input type="text" class="form-control"></td></tr>
+                            <tr><td>30</td><td style="text-align: left;">All catch trays are in place and clean</td><td><select class="form-select"><option>Compliant (2)</option><option>Partial (1)</option><option>Non-Compliant (0)</option></select></td><td><input type="text" class="form-control"></td></tr>
+                            <tr><td>31</td><td style="text-align: left;">No old Biscuits are present in packing area including MD Rejection bin</td><td><select class="form-select"><option>Compliant (2)</option><option>Partial (1)</option><option>Non-Compliant (0)</option></select></td><td><input type="text" class="form-control"></td></tr>
+                            <tr><td>32</td><td style="text-align: left;">All crates and trollies are clean and free from damage</td><td><select class="form-select"><option>Compliant (2)</option><option>Partial (1)</option><option>Non-Compliant (0)</option></select></td><td><input type="text" class="form-control"></td></tr>
+                            <tr><td>33</td><td style="text-align: left;">No loose nut , bolts , electrical cable,loose tape on floor/ equipment.</td><td><select class="form-select"><option>Compliant (2)</option><option>Partial (1)</option><option>Non-Compliant (0)</option></select></td><td><input type="text" class="form-control"></td></tr>
+                            <tr><td>34</td><td style="text-align: left;">No damage or loose threads in all conveyors.</td><td><select class="form-select"><option>Compliant (2)</option><option>Partial (1)</option><option>Non-Compliant (0)</option></select></td><td><input type="text" class="form-control"></td></tr>
+                            <tr><td>35</td><td style="text-align: left;">Conveyor rollers should be cleaned</td><td><select class="form-select"><option>Compliant (2)</option><option>Partial (1)</option><option>Non-Compliant (0)</option></select></td><td><input type="text" class="form-control"></td></tr>
+                            <tr><td>36</td><td style="text-align: left;">No WIP/Previous variety material to be kept on shopfloor</td><td><select class="form-select"><option>Compliant (2)</option><option>Partial (1)</option><option>Non-Compliant (0)</option></select></td><td><input type="text" class="form-control"></td></tr>
+                            <tr><td>37</td><td style="text-align: left;">All Packing machines running/idle and its contact surfaces should be cleaned</td><td><select class="form-select"><option>Compliant (2)</option><option>Partial (1)</option><option>Non-Compliant (0)</option></select></td><td><input type="text" class="form-control"></td></tr>
+                            <tr><td>38</td><td style="text-align: left;">Proper arrangement of RC and identification on the same</td><td><select class="form-select"><option>Compliant (2)</option><option>Partial (1)</option><option>Non-Compliant (0)</option></select></td><td><input type="text" class="form-control"></td></tr>
+                        </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BISCUIT GRINDING -->
+            <div class="bs-card" style="margin-bottom: 20px;">
+                <div class="bs-card-header">
+                    <h4 class="bs-card-title">Biscuit Grinding</h4>
+                </div>
+                <div class="bs-card-body" style="overflow-x: auto;">
+                    <div class="bs-table-container">
+                        <table class="bs-table" border="1" style="border-collapse: collapse; width: 100%; min-width: 800px; text-align: center; font-size: 14px;">
+                        <thead>
+                            <tr>
+                                <th style="width: 5%;">Sr No.</th>
+                                <th style="width: 60%;">Description</th>
+                                <th style="width: 15%;">Compliance Score</th>
+                                <th style="width: 20%;">Remarks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>39</td><td style="text-align: left;">Check for overall area cleaniness</td><td><select class="form-select"><option>Compliant (2)</option><option>Partial (1)</option><option>Non-Compliant (0)</option></select></td><td><input type="text" class="form-control"></td></tr>
+                            <tr><td>40</td><td style="text-align: left;">All sieve condition- Free from damage and cleanliness</td><td><select class="form-select"><option>Compliant (2)</option><option>Partial (1)</option><option>Non-Compliant (0)</option></select></td><td><input type="text" class="form-control"></td></tr>
+                            <tr><td>41</td><td style="text-align: left;">All Magnets are in place and to be clean.</td><td><select class="form-select"><option>Compliant (2)</option><option>Partial (1)</option><option>Non-Compliant (0)</option></select></td><td><input type="text" class="form-control"></td></tr>
+                            <tr><td>42</td><td style="text-align: left;">All Trollies used are clean</td><td><select class="form-select"><option>Compliant (2)</option><option>Partial (1)</option><option>Non-Compliant (0)</option></select></td><td><input type="text" class="form-control"></td></tr>
+                        </tbody>
+                        </table>
+                    </div>
+                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Common Global JS -->
+    <script src="/sites/Mrs_Bectors_PTMS/BectorsSourceCode/Quality-New-Assets/quality-Rajpura/common/js/utils.js"></script>
+    <!-- Component Specific JS -->
+    <script src="/sites/Mrs_Bectors_PTMS/BectorsSourceCode/Quality-New-Assets/quality-Rajpura/ALC/script.js"></script>
+</body>
+</html>

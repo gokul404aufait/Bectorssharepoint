@@ -1,87 +1,96 @@
 <script type="text/javascript" src="/sites/Mrs_Bectors_PTMS/BectorsSourceCode/JS/Home/WelcomeWebPart/WelcomeDAL.js"></script>
 <script type="text/javascript" src="/sites/Mrs_Bectors_PTMS/BectorsSourceCode/JS/Home/WelcomeWebPart/WelcomeBAL.js"></script>
 <script type="text/javascript" src="/sites/Mrs_Bectors_PTMS/BectorsSourceCode/Quality-New-Assets/js/custom/shiftpopup.js"></script>
-
+ 
 <link rel="stylesheet" href="/sites/Mrs_Bectors_PTMS/BectorsSourceCode/Quality-New-Assets/css/main.min.css">
 <link rel="stylesheet" href="/sites/Mrs_Bectors_PTMS/BectorsSourceCode/Quality-New-Assets/css/home-page.min.css">
 <link rel="stylesheet" href="/sites/Mrs_Bectors_PTMS/BectorsSourceCode/Quality-New-Assets/css/style.css">
 <!-- <link rel="stylesheet" href="/sites/Mrs_Bectors_PTMS/BectorsSourceCode/CSS/navbar.css"> -->
-
+ 
 <input type="hidden" id="hdnPlantId" />
-
+ 
 <div class="d-flex align-items-center justify-content-between mb-42">
-    <div class="user-brand d-flex align-items-center gap-3">
-        <div class="user-info">
-            <h4 id="welcometoUser" class="bec-fs-xl text-primary lh-31 mb-1"></h4>
-            <p id="timeId" class="bec-fs-sm text-secondary"></p>
-        </div>
-    </div>
-
+<div class="user-brand d-flex align-items-center gap-3">
+<div class="user-info">
+<h4 id="welcometoUser" class="bec-fs-xl text-primary lh-31 mb-1"></h4>
+<p id="timeId" class="bec-fs-sm text-secondary"></p>
+</div>
+</div>
+ 
     <div class="d-flex align-items-center gap-3 selection-sector" id="EmployeeDiv">
-        <button type="button" id="LinkPlantTour" class="btn btn-primary" onclick="AddDepartmentTourOnClick()">
-            <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M13.6667 8H3.66669" stroke="white" stroke-width="1.5" stroke-linecap="round"
-                    stroke-linejoin="round" />
-                <path d="M8.66669 13V3" stroke="white" stroke-width="1.5" stroke-linecap="round"
-                    stroke-linejoin="round" />
-            </svg>
-            Plant Tour
-        </button>
-        <div class="form-group">
-            <select id="DepartmentDropDownId" class="form-select" onchange="drpDepartmentChangefun()">
-                <option value="All">All Department</option>
-            </select>
-        </div>
-    </div>
-</div>
+<button type="button" id="LinkPlantTour" class="btn btn-primary" onclick="AddDepartmentTourOnClick()">
+<svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M13.6667 8H3.66669" stroke="white" stroke-width="1.5" stroke-linecap="round"
 
-<div id="shiftPopup" class="main-popup shift-popup">
-    <div class="popup-bg"></div>
-    <div class="popup-content">
-        <div class="popup-common-box">
-            <div class="popup-header">
-                <h4 class="popup-header-title">Start Plant Tour</h4>
-                <button type="button" class="bs-btn popup-close-btn" onclick="tourPopupclose()">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
-                        <path d="M11 1L1 11M1 1L11 11" stroke="#6D757E" stroke-width="1.5" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                    </svg>
-                </button>
-            </div>
-            <div class="popup-body">
-                <div class="tour-popup-content-wrapper">
-                    <label class="form-label">Select Tour</label>
-                    <div class="select2-parent">
-                        <select id="tourSelect" class="form-select" name="tour-dropdown">
-                            <option value="Product Quality Index">Product Quality Index</option>
-                            <option value="Cream Percentage Checklist">Cream Percentage Checklist</option>
-                            <option value="Sieves And Magnets Old Plant">Sieves And Magnets Old Plant</option>
-                            <option value="Sieves And Magnets New Plant">Sieves And Magnets New Plant</option>
-                            <option value="Product Monitoring Record">Product Monitoring Record</option>
-                            <option value="Code Verification Record">Code Verification Record</option>
-                            <option value="OPRP And CCP Record">OPRP And CCP Record</option>
-                            <option value="Baking Process Record">Baking Process Record</option>
-                            <option value="Seal Integrity Test">Seal Integrity Test</option>
-                            <option value="Area Line Clearance Checklist">Area Line Clearance Checklist</option>
-                            <option value="Net Weight Monitoring Record">Net Weight Monitoring Record</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="shift-popup-content-wrapper">
-                    <label class="form-label">Select Shift</label>
-                    <div class="select2-parent">
-                        <select id="shiftSelect" class="form-select" name="shift-dropdown">
-                            <option value="Shift 1">Shift 1</option>
-                            <option value="Shift 2">Shift 2</option>
-                            <option value="Shift 3">Shift 3</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="popup-footer">
-                <button type="button" class="bs-btn bs-btn-outline-primary" onclick="tourPopupclose()">Cancel</button>
-                <button id="shiftPopupDone" type="button" class="bs-btn bs-btn-primary" onclick="SaveQualityDataItem()">Done</button>
-            </div>
-        </div>
-    </div>
+                    stroke-linejoin="round" />
+<path d="M8.66669 13V3" stroke="white" stroke-width="1.5" stroke-linecap="round"
+
+                    stroke-linejoin="round" />
+</svg>
+
+            Plant Tour
+</button>
+<div class="form-group">
+<select id="DepartmentDropDownId" class="form-select" onchange="drpDepartmentChangefun()">
+<option value="All">All Department</option>
+</select>
 </div>
+</div>
+</div>
+ 
+<div id="shiftPopup" class="main-popup shift-popup">
+<div class="popup-bg"></div>
+<div class="popup-content">
+<div class="popup-common-box">
+<div class="popup-header">
+<h4 class="popup-header-title">Start Plant Tour</h4>
+<button type="button" class="bs-btn popup-close-btn" onclick="tourPopupclose()">
+<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+<path d="M11 1L1 11M1 1L11 11" stroke="#6D757E" stroke-width="1.5" stroke-linecap="round"
+
+                            stroke-linejoin="round" />
+</svg>
+</button>
+</div>
+<div class="popup-body">
+<div class="tour-popup-content-wrapper">
+<label class="form-label">Select Tour</label>
+<div class="select2-parent">
+<select id="tourSelect" class="form-select" name="tour-dropdown">
+<option value="Area Line Clearance Checklist">Area Line Clearance Checklist</option>
+<option value="Baking Process Record">Baking Process Record</option>
+<option value="Code Verification Record">Code Verification Record</option>
+<option value="Cream Percentage Checklist">Cream Percentage Checklist</option>
+<option value="OPRP And CCP Record">OPRP And CCP Record</option>
+<option value="Mixing Parameter">Mixing Parameter</option>
+<option value="Product Monitoring Record">Product Monitoring Record</option>
+<option value="Product Quality Index">Product Quality Index</option>
+<option value="Quality Wall Record">Quality Wall Record</option>
+<option value="Seal Integrity Test">Seal Integrity Test</option>
+<option value="Sieves And Magnets New Plant">Sieves And Magnets New Plant</option>
+<option value="Sieves And Magnets Old Plant">Sieves And Magnets Old Plant</option>
+</select>
+</div>
+</div>
+<div class="shift-popup-content-wrapper">
+<label class="form-label">Select Shift</label>
+<div class="select2-parent">
+<select id="shiftSelect" class="form-select" name="shift-dropdown">
+<option value="Shift 1">Shift 1</option>
+<option value="Shift 2">Shift 2</option>
+<option value="Shift 3">Shift 3</option>
+</select>
+</div>
+</div>
+</div>
+<div class="popup-footer">
+<button type="button" class="bs-btn bs-btn-outline-primary" onclick="tourPopupclose()">Cancel</button>
+<button id="shiftPopupDone" type="button" class="bs-btn bs-btn-primary" onclick="SaveQualityDataItem()">Done</button>
+</div>
+</div>
+</div>
+</div>
+ 
+ 
+ 
+ 
