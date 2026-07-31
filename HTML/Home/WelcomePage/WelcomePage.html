@@ -1,11 +1,11 @@
 <script type="text/javascript" src="/sites/Mrs_Bectors_PTMS/BectorsSourceCode/JS/Home/WelcomeWebPart/WelcomeDAL.js"></script>
 <script type="text/javascript" src="/sites/Mrs_Bectors_PTMS/BectorsSourceCode/JS/Home/WelcomeWebPart/WelcomeBAL.js"></script>
 <script type="text/javascript" src="/sites/Mrs_Bectors_PTMS/BectorsSourceCode/Quality-New-Assets/js/custom/shiftpopup.js"></script>
+<script type="text/javascript" src="/sites/Mrs_Bectors_PTMS/BectorsSourceCode/Quality-New-Assets/quality-Rajpura/common/js/dashboard.js"></script>
  
 <link rel="stylesheet" href="/sites/Mrs_Bectors_PTMS/BectorsSourceCode/Quality-New-Assets/css/main.min.css">
 <link rel="stylesheet" href="/sites/Mrs_Bectors_PTMS/BectorsSourceCode/Quality-New-Assets/css/home-page.min.css">
 <link rel="stylesheet" href="/sites/Mrs_Bectors_PTMS/BectorsSourceCode/Quality-New-Assets/css/style.css">
-<!-- <link rel="stylesheet" href="/sites/Mrs_Bectors_PTMS/BectorsSourceCode/CSS/navbar.css"> -->
  
 <input type="hidden" id="hdnPlantId" />
  
@@ -89,6 +89,85 @@
 </div>
 </div>
 </div>
+</div>
+
+<!-- Common Rajpura Quality Dashboard Section (Initially Hidden) -->
+<div id="rajpuraQualityDashboard" style="display: none; margin-top: 30px; padding: 15px;">
+    <div class="bs-card" style="margin-bottom: 25px; padding: 20px; border-radius: 8px; border: 1px solid #ccc;">
+        <div class="bs-card-header d-flex justify-content-between align-items-center mb-3" style="background: #f8f9fa; padding: 10px; border-bottom: 1px solid #e0e0e0;">
+            <h3 class="bec-fs-lg text-primary" style="font-weight: bold; margin: 0; color: #1a73e8;">Rajpura Quality Dashboard</h3>
+            <span class="badge badge-fill badge-primary" style="background-color: #1a73e8; color: #fff; padding: 5px 10px; border-radius: 4px;">Rajpura Plant</span>
+        </div>
+        <div class="bs-card-body">
+            
+            <!-- KPI Cards Row -->
+            <div class="row d-flex gap-3 mb-4" style="display: flex; gap: 15px; margin-bottom: 25px;">
+                <div class="bs-card" style="flex: 1; padding: 15px; border-radius: 6px; border: 1px solid #e2e8f0; text-align: center; background: #f8fafc; margin-bottom: 0 !important;">
+                    <div style="font-size: 14px; color: #64748b; font-weight: 500;">Total Clearance Tours</div>
+                    <div id="kpi-total-tours" style="font-size: 28px; font-weight: bold; color: #1e293b; margin-top: 5px;">0</div>
+                </div>
+                <div class="bs-card" style="flex: 1; padding: 15px; border-radius: 6px; border: 1px solid #e2e8f0; text-align: center; background: #f8fafc; margin-bottom: 0 !important;">
+                    <div style="font-size: 14px; color: #64748b; font-weight: 500;">Clearance Success Rate</div>
+                    <div id="kpi-success-rate" style="font-size: 28px; font-weight: bold; color: #16a34a; margin-top: 5px;">0%</div>
+                </div>
+                <div class="bs-card" style="flex: 1; padding: 15px; border-radius: 6px; border: 1px solid #e2e8f0; text-align: center; background: #f8fafc; margin-bottom: 0 !important;">
+                    <div style="font-size: 14px; color: #64748b; font-weight: 500;">Open Deviations</div>
+                    <div id="kpi-open-deviations" style="font-size: 28px; font-weight: bold; color: #dc2626; margin-top: 5px;">0</div>
+                </div>
+                <div class="bs-card" style="flex: 1; padding: 15px; border-radius: 6px; border: 1px solid #e2e8f0; text-align: center; background: #f8fafc; margin-bottom: 0 !important;">
+                    <div style="font-size: 14px; color: #64748b; font-weight: 500;">Pending Re-Verification</div>
+                    <div id="kpi-pending-reverify" style="font-size: 28px; font-weight: bold; color: #d97706; margin-top: 5px;">0</div>
+                </div>
+            </div>
+            
+            <!-- Ongoing Clearances & Action Tracking Panel -->
+            <div class="mb-4" style="margin-bottom: 25px;">
+                <h4 class="bec-fs-md mb-2" style="font-weight: bold; border-left: 4px solid #1a73e8; padding-left: 8px; color: #1a73e8; margin-bottom: 15px;">Ongoing Clearance Tours & Action Tracking</h4>
+                <div class="table-responsive" style="overflow-x: auto;">
+                    <table class="bs-table" border="1" style="border-collapse: collapse; width: 100%; min-width: 800px; text-align: center; font-size: 14px;">
+                        <thead>
+                            <tr style="background: #f8f9fa;">
+                                <th style="width: 15%;">Date & Time</th>
+                                <th style="width: 15%;">Checklist Form</th>
+                                <th style="width: 10%;">Line</th>
+                                <th style="width: 10%;">Shift</th>
+                                <th style="width: 20%;">Executive Details</th>
+                                <th style="width: 15%;">Status</th>
+                                <th style="width: 15%;">Pending With</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rajpura-ongoing-tbody">
+                            <tr><td colspan="7" class="text-center py-3 text-secondary">Loading ongoing tours...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Cycle & Summary History Panel -->
+            <div>
+                <h4 class="bec-fs-md mb-2" style="font-weight: bold; border-left: 4px solid #137333; padding-left: 8px; color: #137333; margin-bottom: 15px;">Closed, Completed & Expired Archives</h4>
+                <div class="table-responsive" style="overflow-x: auto;">
+                    <table class="bs-table" border="1" style="border-collapse: collapse; width: 100%; min-width: 800px; text-align: center; font-size: 14px;">
+                        <thead>
+                            <tr style="background: #f8f9fa;">
+                                <th style="width: 15%;">Date & Time</th>
+                                <th style="width: 15%;">Checklist Form</th>
+                                <th style="width: 10%;">Line</th>
+                                <th style="width: 10%;">Shift</th>
+                                <th style="width: 20%;">Executive Details</th>
+                                <th style="width: 15%;">Score</th>
+                                <th style="width: 15%;">Status / Result</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rajpura-cycles-tbody">
+                            <tr><td colspan="7" class="text-center py-3 text-secondary">Loading history...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
  
  

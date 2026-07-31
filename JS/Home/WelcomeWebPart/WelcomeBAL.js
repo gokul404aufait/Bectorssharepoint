@@ -542,13 +542,15 @@ async function SaveQualityDataItem() {
       "Authorization": "Bearer " + AccessToken
     };
 
+    const actualUserName = typeof _spPageContextInfo !== 'undefined' ? _spPageContextInfo.userDisplayName : EmployeeName;
+
     const dataToSave = {
       cr3ea_departmentid: userDepratmentId,
       cr3ea_tourstartdate: TourStartDateDTour,
-      cr3ea_tourby: EmployeeName,
+      cr3ea_tourby: actualUserName,
       cr3ea_status: 'In Progress',
       cr3ea_plantid: Plantid,
-      cr3ea_observedby: EmployeeName,
+      cr3ea_observedby: actualUserName,
       cr3ea_roleid: userRoleID,
       cr3ea_title: TitleDTour
     };

@@ -2,3 +2,55 @@
 .alc-header {
     background-color: #e0f7fa;
 }
+
+/* Specificity Overrides to Prevent Parent Page Style Bleeding */
+
+#rajpura-alc-main-container {
+    font-family: 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+}
+
+#rajpura-alc-main-container input, 
+#rajpura-alc-main-container select, 
+#rajpura-alc-main-container textarea {
+    box-sizing: border-box !important;
+    border-radius: 6px !important;
+}
+
+/* Ensure our bootstrap cards are displayed with high priority */
+#rajpura-alc-main-container .bs-card {
+    border: 1px solid #e2e8f0 !important;
+    background: #ffffff !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+    margin-bottom: 20px !important;
+}
+
+#rajpura-alc-main-container .bs-card-header {
+    background-color: #ffffff !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+}
+
+/* Specificity booster for table styling */
+#rajpura-alc-main-container .bs-table th {
+    background-color: #f8fafc !important;
+    color: #475569 !important;
+    font-weight: 600 !important;
+}
+
+#rajpura-alc-main-container .bs-table td {
+    border-bottom: 1px solid #f1f5f9 !important;
+}
+
+/* Button overrides to ensure they don't inherit SharePoint button backgrounds */
+#rajpura-alc-main-container .bs-btn {
+    font-weight: 500 !important;
+    border-radius: 6px !important;
+}
+
+#rajpura-alc-main-container .bs-btn-primary {
+    background-color: #2563eb !important;
+    color: #ffffff !important;
+}
+
+#rajpura-alc-main-container .bs-btn-primary:hover {
+    background-color: #1d4ed8 !important;
+}

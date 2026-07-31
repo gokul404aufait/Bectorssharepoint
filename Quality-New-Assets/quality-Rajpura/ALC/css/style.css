@@ -1,0 +1,85 @@
+input[type=password], input[type=text], input[type=file], input:not([type]), textarea, .ms-inputBox {
+    padding: 20px 10px !important;
+}
+.select2-parent .select2-container--default .select2-selection__arrow {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    top: 20px !important;
+    right: 12px;
+    width: 12px;
+    height: 100%;
+}
+.tour-cycle-estimation-footer {padding-right:15px;}
+
+@media (max-width: 768px) {
+  .bs-nav-tabs-header {
+    min-width:180px;
+}
+#planTourSummary .bs-card-body{
+    overflow:scroll;
+}
+.tour-cyle-start-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 20px;
+    row-gap: 12px;
+    align-items: start;
+  }
+
+  .bs-menu-parent {
+    grid-column: span 2;
+    justify-self: end;
+    display: block !important; /* Make visible on tablet if needed */
+  }
+  .estimation-not-okay-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 24px;
+  }
+
+  /* Category radio button group spans both columns */
+  .estimation-item-category {
+    grid-column: span 2;
+  }
+
+  .form-check-lists {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .form-label{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .tour-cyle-card-lists {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .bs-card {
+    flex: 1 1 48%; /* Two columns */
+    min-width: 300px;
+  }
+
+  .bs-card .bs-card-body,
+  .submission-result-sec {
+    overflow-x: auto;
+  }
+
+  .bs-table-container {
+    overflow-x: auto;
+  }
+
+  .bs-table {
+    width: 100%;
+    min-width: 500px; /* Ensure proper table spacing */
+  }
+
+  .submission-result-wrapper {
+    margin-bottom: 1rem;
+  }
+}
