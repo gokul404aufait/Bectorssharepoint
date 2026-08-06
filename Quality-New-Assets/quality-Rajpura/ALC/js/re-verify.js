@@ -140,25 +140,13 @@ const ALC_ReVerification = {
                 await ALC_DAL.saveChecklistRow(updatedRecord);
             }
 
-            // 2. Evaluate overall result
-            let statusText = !anyFailedAgain ? "Completed" : "Failed - Pending Production";
-            let isPass = !anyFailedAgain;
-            let stateNext = isPass ? ALC_STATES.SUMMARY : ALC_STATES.PRODUCTION_ACTION;
-
-            // Same-day check validation rule
-            if (ALC_StateMachine.isPreviousDay) {
-                isPass = false;
-                statusText = "Closed - Expired";
-                stateNext = ALC_STATES.SUMMARY;
-            }
-
             // Compute overall score
             const allCheckpoints = await ALC_DAL.getCheckpoints(ALC_StateMachine.currentTourId);
             let totalMaxScore = allCheckpoints.length * 2;
             let totalObtainedScore = 0;
 
             allCheckpoints.forEach(cp => {
-                const scoreText = cp.cr3ea_defectcategory;
+                const scoreText = cp.cr3ea_defectcategory || "Okay (2)";
                 let numericScore = 2;
                 if (scoreText.includes("(0)") || scoreText === "00" || scoreText.includes("Non-Compliant")) {
                     numericScore = 0;
@@ -168,20 +156,38 @@ const ALC_ReVerification = {
                 totalObtainedScore += numericScore;
             });
 
-            const overallPercent = totalMaxScore > 0 ? Math.round((totalObtainedScore / totalMaxScore) * 100) : 0;
+            const overallPercentRaw = totalMaxScore > 0 ? (totalObtainedScore / totalMaxScore) * 100 : 0;
+            const overallPercent = overallPercentRaw.toFixed(2);
+
+            // 2. Evaluate overall result based on score threshold (80%)
+            let isPass = (parseFloat(overallPercent) >= 80);
+            let statusText = "Completed";
+            let stateNext = ALC_STATES.SUMMARY;
+
+            if (ALC_StateMachine.isPreviousDay) {
+                isPass = false;
+                statusText = "Closed - Expired";
+                stateNext = ALC_STATES.SUMMARY;
+            } else if (anyFailedAgain) {
+                statusText = isPass ? "Success - Pending Production" : "Failed - Pending Production";
+                // QA (not in production team) should go to Summary page instead of Production Action
+                stateNext = (ALC_StateMachine.isProductionUser || ALC_StateMachine.isProductUser) ? ALC_STATES.PRODUCTION_ACTION : ALC_STATES.SUMMARY;
+            }
 
             // Get base title
             const session = ALC_StateMachine.currentSession || {};
             const baseTitle = session.cr3ea_title || ("ALC_" + moment().format("MM-DD-YYYY_HH:mm"));
             const cleanBaseTitle = baseTitle.split("||")[0].trim();
 
+            const dbStatusValue = statusText === "Success - Pending Production" ? "Failed - Pending Production" : statusText;
+
             const sessionUpdate = {
                 cr3ea_prod_qualitytourid: ALC_StateMachine.currentTourId,
-                cr3ea_status: statusText,
+                cr3ea_status: dbStatusValue,
                 cr3ea_processstatus: statusText,
                 cr3ea_title: cleanBaseTitle,
-                cr3ea_overall_score: overallPercent.toString(),
-                cr3ea_checklist_result: isPass ? "Pass" : (ALC_StateMachine.isPreviousDay ? "Expired" : "Fail")
+                cr3ea_overall_score: String(overallPercent),
+                cr3ea_checklist_result: !anyFailedAgain ? "Pass" : (ALC_StateMachine.isPreviousDay ? "Expired" : "Fail")
             };
             await ALC_DAL.saveSession(sessionUpdate);
 
@@ -189,10 +195,12 @@ const ALC_ReVerification = {
 
             if (ALC_StateMachine.isPreviousDay) {
                 alert(`Observations Submitted Successfully! Since this is a previous day's observation, the session has been closed as Expired without line clearance.`);
-            } else if (isPass) {
+            } else if (statusText === "Success - Pending Production") {
+                alert(`Re-verification complete. Current score is: ${overallPercent}% (Success). However, since there are still failing checkpoints, assigning back to Production.`);
+            } else if (statusText === "Completed") {
                 alert(`ALC Re-Verification Cleared Successfully! Overall Score: ${overallPercent}%`);
             } else {
-                alert(`Re-Verification failed. Some checkpoints are still non-compliant. Returning to production.`);
+                alert(`Re-Verification failed. Current score is: ${overallPercent}%. Some checkpoints are still non-compliant. Returning to production.`);
             }
 
             // Transition state

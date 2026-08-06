@@ -360,6 +360,33 @@ const ALC_Dashboard = {
                 }
             }
 
+            // Fetch SharePoint configs and Dataverse checkpoints for ongoing tours
+            const toursNeedCheckpoints = ongoingList.filter(t => {
+                const status = t.cr3ea_processstatus || t.cr3ea_status || "";
+                return status !== "In Progress";
+            });
+
+            if (toursNeedCheckpoints.length > 0) {
+                let configs = [];
+                try {
+                    configs = await ALC_Dashboard.fetchSharePointConfigs();
+                } catch (e) {
+                    console.warn("Failed to fetch configs for dashboard:", e);
+                }
+                ALC_Dashboard.configs = configs;
+
+                const fetchCheckpointsPromises = toursNeedCheckpoints.map(async t => {
+                    try {
+                        const checkpoints = await ALC_Dashboard.fetchCheckpointsDirect(t.cr3ea_prod_qualitytourid, token, baseApiUrl, apiVersion);
+                        t.checkpoints = checkpoints || [];
+                    } catch (e) {
+                        console.warn(`Failed to fetch checkpoints for tour ${t.cr3ea_prod_qualitytourid}:`, e);
+                        t.checkpoints = [];
+                    }
+                });
+                await Promise.all(fetchCheckpointsPromises);
+            }
+
             ALC_Dashboard.renderOngoingList(ongoingList);
             ALC_Dashboard.renderClosedList(closedList);
 
@@ -393,6 +420,11 @@ const ALC_Dashboard = {
                 return `QA Executive (${qaName})`;
             case "Failed - Pending Production":
             case "Success - Pending Production":
+                // Resolve area-wise pending production assignees
+                const assignees = ALC_Dashboard.getAreaAssigneesForFailedCheckpoints(t);
+                if (assignees && assignees.length > 0) {
+                    return `Production Exec (${assignees.join(", ")})`;
+                }
                 return `Production Exec (${prodName})`;
             case "Pending Re-Verification":
             case "Success - Pending Re-Verification":
@@ -453,14 +485,13 @@ const ALC_Dashboard = {
         return looseM.isValid() ? looseM : null;
     },
 
-    // Render Ongoing table
     renderOngoingList: function (list) {
         const tbody = document.getElementById("rajpura-ongoing-tbody");
         if (!tbody) return;
 
         tbody.innerHTML = "";
         if (list.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="7" class="text-center py-3 text-secondary">No ongoing clearance tours at the moment.</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="8" class="text-center py-3 text-secondary">No ongoing clearance tours at the moment.</td></tr>`;
             return;
         }
 
@@ -475,7 +506,8 @@ const ALC_Dashboard = {
 
                 const date = ALC_Dashboard.parseDate(t.cr3ea_tourstartdate);
                 const titleVal = t.cr3ea_title || "";
-                const form = titleVal.split('_')[0] || "Area Line Clearance";
+                const cleanTitle = titleVal.split("||")[0].trim();
+                const form = cleanTitle.split('_')[0] || "Area Line Clearance";
                 const line = t.cr3ea_lineno || "N/A";
                 const shift = t.cr3ea_shift || "N/A";
                 const prodExec = t.cr3ea_shiftexecutiveproduction || "N/A";
@@ -495,12 +527,35 @@ const ALC_Dashboard = {
 
                 const pendingWith = ALC_Dashboard.getPendingWith(t);
 
+                // Resolve Score display or status comment if no score is available yet
+                let scoreDisplay = "-";
+                const computedScore = ALC_Dashboard.calculateScoreDynamically(t);
+                
+                if (computedScore !== null) {
+                    scoreDisplay = `<strong style="color: #0f172a; font-size: 15px;">${computedScore}%</strong>`;
+                } else if (t.cr3ea_overall_score !== undefined && t.cr3ea_overall_score !== null && String(t.cr3ea_overall_score).trim() !== "") {
+                    // Fallback to Dataverse field if checkpoints couldn't be loaded (e.g. mock fallback)
+                    const scoreNum = parseFloat(t.cr3ea_overall_score);
+                    scoreDisplay = `<strong style="color: #0f172a; font-size: 15px;">${scoreNum.toFixed(2)}%</strong>`;
+                } else {
+                    if (status === "In Progress") {
+                        scoreDisplay = `<span class="text-secondary" style="font-size: 12px; font-style: italic;">Request Pending</span>`;
+                    } else if (status === "Pending QA") {
+                        scoreDisplay = `<span class="text-secondary" style="font-size: 12px; font-style: italic;">Awaiting QA Accept</span>`;
+                    } else if (status === "QA In Progress") {
+                        scoreDisplay = `<span class="text-secondary" style="font-size: 12px; font-style: italic;">Evaluation Pending</span>`;
+                    } else {
+                        scoreDisplay = `<span class="text-secondary" style="font-size: 12px; font-style: italic;">N/A</span>`;
+                    }
+                }
+
                 tr.innerHTML = `
                     <td>${date}</td>
                     <td><strong>${form}</strong></td>
                     <td>${line}</td>
                     <td>${shift}</td>
                     <td style="text-align: left;">${execs}</td>
+                    <td>${scoreDisplay}</td>
                     <td><span class="badge badge-fill ${badgeClass}">${status}</span></td>
                     <td style="font-weight: 500; color: #1e293b;">${pendingWith}</td>
                 `;
@@ -533,7 +588,8 @@ const ALC_Dashboard = {
 
                 const date = ALC_Dashboard.parseDate(t.cr3ea_tourstartdate);
                 const titleVal = t.cr3ea_title || "";
-                const form = titleVal.split('_')[0] || "Area Line Clearance";
+                const cleanTitle = titleVal.split("||")[0].trim();
+                const form = cleanTitle.split('_')[0] || "Area Line Clearance";
                 const line = t.cr3ea_lineno || "N/A";
                 const shift = t.cr3ea_shift || "N/A";
                 const prodExec = t.cr3ea_shiftexecutiveproduction || "N/A";
@@ -541,7 +597,7 @@ const ALC_Dashboard = {
                 const qaExec = qaExecRaw.includes("@") ? ALC_Dashboard.resolveQaNameFromEmail(qaExecRaw) : qaExecRaw;
                 const execs = `Prod: ${prodExec} | QA: ${qaExec}`;
                 
-                let score = t.cr3ea_overall_score ? `${t.cr3ea_overall_score}%` : "N/A";
+                let score = (t.cr3ea_overall_score !== undefined && t.cr3ea_overall_score !== null) ? `${t.cr3ea_overall_score}%` : "N/A";
                 let result = t.cr3ea_checklist_result || "N/A";
 
                 if (titleVal.indexOf("||") !== -1) {
@@ -552,6 +608,9 @@ const ALC_Dashboard = {
                         score = scorePart.replace("Score:", "").trim();
                     } else if (scorePart) {
                         score = scorePart;
+                    }
+                    if (score && score !== "N/A" && !score.includes("%")) {
+                        score = `${score}%`;
                     }
                     result = resultPart || result;
                 }
@@ -583,5 +642,154 @@ const ALC_Dashboard = {
                 console.error("Error rendering closed row: ", err, t);
             }
         });
+    },
+
+    // Fetch SharePoint configurations for the plant
+    fetchSharePointConfigs: async function () {
+        const webUrl = typeof _spPageContextInfo !== 'undefined' ? _spPageContextInfo.webAbsoluteUrl : "";
+        const listName = "Quality-Rajpura";
+        
+        let query = "?$select=Id,Title,ConfigType,Region,Plant,Area," +
+            "AssignedUser/Title,AssignedUser/EMail,AssignedUser/Id" +
+            "&$expand=AssignedUser" +
+            "&$filter=Plant eq 'Rajpura'";
+        
+        let url = `${webUrl}/_api/web/lists/getByTitle('${listName}')/items${query}`;
+        let response;
+        let isFallback = false;
+        
+        try {
+            response = await fetch(url, { headers: { "Accept": "application/json; odata=verbose" } });
+            if (!response.ok) throw new Error("Fallback needed");
+        } catch (e) {
+            isFallback = true;
+            query = "?$select=Id,Title,Config_x0020_Type,Region,Plant,Area," +
+                "Assigned_x0020_User/Title,Assigned_x0020_User/EMail,Assigned_x0020_User/Id" +
+                "&$expand=Assigned_x0020_User" +
+                "&$filter=Plant eq 'Rajpura'";
+            url = `${webUrl}/_api/web/lists/getByTitle('${listName}')/items${query}`;
+            response = await fetch(url, { headers: { "Accept": "application/json; odata=verbose" } });
+        }
+
+        if (!response.ok) {
+            throw new Error(`Failed to fetch SharePoint config on dashboard: ${response.statusText}`);
+        }
+        
+        const data = await response.json();
+        const results = data.d.results;
+        
+        return results.map(item => {
+            const rawUser = isFallback ? item.Assigned_x0020_User : item.AssignedUser;
+            let assignedUserNormalized = { results: [] };
+            if (rawUser) {
+                if (rawUser.results && Array.isArray(rawUser.results)) {
+                    assignedUserNormalized = rawUser;
+                } else if (rawUser.Title || rawUser.EMail) {
+                    assignedUserNormalized = { results: [rawUser] };
+                }
+            }
+            return {
+                Id: item.Id,
+                Title: item.Title,
+                ConfigType: isFallback ? item.Config_x0020_Type : item.ConfigType,
+                Area: item.Area,
+                AssignedUser: assignedUserNormalized
+            };
+        });
+    },
+
+    // Fetch checkpoints for a tour directly from Dataverse
+    fetchCheckpointsDirect: async function (tourId, token, baseApiUrl, apiVersion) {
+        const headers = {
+            "Accept": "application/json",
+            "OData-MaxVersion": "4.0",
+            "OData-Version": "4.0"
+        };
+        if (token) headers["Authorization"] = `Bearer ${token}`;
+
+        const filter = `?$filter=cr3ea_qualitytourid eq '${tourId}'`;
+        const url = `${baseApiUrl}/api/data/v${apiVersion}/cr3ea_rajpura_alcses${filter}`;
+
+        const response = await fetch(url, { headers: headers });
+        if (!response.ok) {
+            throw new Error(`Dataverse fetch checkpoints failed: ${response.status}`);
+        }
+        const data = await response.json();
+        return data.value;
+    },
+
+    // Helper to extract unique production area assignees from failed checkpoints
+    getAreaAssigneesForFailedCheckpoints: function (t) {
+        if (!t.checkpoints || t.checkpoints.length === 0 || !ALC_Dashboard.configs || ALC_Dashboard.configs.length === 0) {
+            return [];
+        }
+
+        const pendingFailedCheckpoints = t.checkpoints.filter(cp => {
+            const isFailed = cp.cr3ea_status === "Not Okay" || 
+                             (cp.cr3ea_defectcategory && (
+                                 cp.cr3ea_defectcategory.includes("00") || 
+                                 cp.cr3ea_defectcategory.includes("01") ||
+                                 cp.cr3ea_defectcategory.includes("Non-Compliant") ||
+                                 cp.cr3ea_defectcategory.includes("Partial")
+                             ));
+            const hasRemarks = cp.cr3ea_productionremarks || (cp.cr3ea_defectremarks && cp.cr3ea_defectremarks.trim().startsWith("Action:"));
+            return isFailed && !hasRemarks;
+        });
+
+        if (pendingFailedCheckpoints.length === 0) {
+            return [];
+        }
+
+        const assigneeNames = new Set();
+        pendingFailedCheckpoints.forEach(cp => {
+            const areaName = cp.cr3ea_area;
+            if (!areaName) return;
+
+            const configRow = ALC_Dashboard.configs.find(c => 
+                c.ConfigType === "Product User" && 
+                c.Area && 
+                (c.Area.toLowerCase().includes(areaName.toLowerCase().trim()) || 
+                 areaName.toLowerCase().trim().includes(c.Area.toLowerCase()))
+            );
+
+            if (configRow && configRow.AssignedUser && configRow.AssignedUser.results) {
+                configRow.AssignedUser.results.forEach(u => {
+                    if (u.Title) {
+                        assigneeNames.add(u.Title);
+                    }
+                });
+            }
+        });
+
+        return Array.from(assigneeNames);
+    },
+
+    // Dynamically calculate score from fetched checkpoints (identical to Summary page logic)
+    calculateScoreDynamically: function (t) {
+        if (!t.checkpoints || t.checkpoints.length === 0) {
+            return null;
+        }
+
+        let totalMaxPoints = 0;
+        let totalObtainedPoints = 0;
+
+        t.checkpoints.forEach(cp => {
+            totalMaxPoints += 2;
+
+            let numericScore = 2; // Default is Okay (2)
+            const scoreText = cp.cr3ea_defectcategory || "";
+            
+            if (scoreText.includes("(0)") || scoreText === "00" || scoreText.includes("Non-Compliant")) {
+                numericScore = 0;
+            } else if (scoreText.includes("(1)") || scoreText === "01" || scoreText.includes("Partial")) {
+                numericScore = 1;
+            }
+            
+            totalObtainedPoints += numericScore;
+        });
+
+        if (totalMaxPoints === 0) return null;
+        const percentRaw = (totalObtainedPoints / totalMaxPoints) * 100;
+        return percentRaw.toFixed(2);
     }
 };

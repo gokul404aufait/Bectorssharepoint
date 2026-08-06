@@ -58,49 +58,52 @@ const ALC_Checklist = {
         }
     },
 
-    // Step 7 & 8: Calculate score and evaluation
-    calculateScore: function () {
-        const rows = document.querySelectorAll("#section-checklist-filling tbody tr");
-        let totalMaxScore = 0;
-        let totalObtainedScore = 0;
-        let hasDefects = false;
-        const scores = [];
+    // Step 7 & 8: Calculate score and evaluation (returns a Promise to ensure completeness)
+    calculateScore: async function () {
+        return new Promise((resolve) => {
+            const rows = document.querySelectorAll("#section-checklist-filling tbody tr");
+            let totalMaxScore = 0;
+            let totalObtainedScore = 0;
+            let hasDefects = false;
+            const scores = [];
 
-        rows.forEach(row => {
-            const selectEl = row.querySelector("select");
-            const remarksEl = row.querySelector("input[type='text']");
-            if (selectEl) {
-                const scoreValue = selectEl.value;
-                let numericalScore = 2; // Default to Compliant (2)
-                
-                if (scoreValue.includes("(2)") || scoreValue === "02" || scoreValue.includes("Compliant")) {
-                    numericalScore = 2;
-                } else if (scoreValue.includes("(1)") || scoreValue === "01" || scoreValue.includes("Partial")) {
-                    numericalScore = 1;
-                    hasDefects = true;
-                } else if (scoreValue.includes("(0)") || scoreValue === "00" || scoreValue.includes("Non-Compliant")) {
-                    numericalScore = 0;
-                    hasDefects = true;
+            rows.forEach(row => {
+                const selectEl = row.querySelector("select");
+                const remarksEl = row.querySelector("input[type='text']");
+                if (selectEl) {
+                    const scoreValue = selectEl.value;
+                    let numericalScore = 2; // Default to Compliant (2)
+                    
+                    if (scoreValue.includes("(0)") || scoreValue === "00" || scoreValue.includes("Non-Compliant")) {
+                        numericalScore = 0;
+                        hasDefects = true;
+                    } else if (scoreValue.includes("(1)") || scoreValue === "01" || scoreValue.includes("Partial")) {
+                        numericalScore = 1;
+                        hasDefects = true;
+                    } else if (scoreValue.includes("(2)") || scoreValue === "02" || scoreValue.includes("Compliant")) {
+                        numericalScore = 2;
+                    }
+
+                    totalObtainedScore += numericalScore;
+                    totalMaxScore += 2; // Each checkpoint has max score of 2
+
+                    scores.push({
+                        criteria: row.querySelectorAll("td")[1]?.innerText.trim() || "",
+                        score: numericalScore,
+                        remarks: remarksEl ? remarksEl.value.trim() : ""
+                    });
                 }
+            });
 
-                totalObtainedScore += numericalScore;
-                totalMaxScore += 2; // Each checkpoint has max score of 2
-
-                scores.push({
-                    criteria: row.querySelectorAll("td")[1]?.innerText.trim() || "",
-                    score: numericalScore,
-                    remarks: remarksEl ? remarksEl.value.trim() : ""
-                });
-            }
+            const scorePercentRaw = totalMaxScore > 0 ? (totalObtainedScore / totalMaxScore) * 100 : 0;
+            const scorePercent = scorePercentRaw.toFixed(2);
+            
+            resolve({
+                percent: scorePercent,
+                hasDefects: hasDefects,
+                scores: scores
+            });
         });
-
-        const scorePercent = totalMaxScore > 0 ? Math.round((totalObtainedScore / totalMaxScore) * 100) : 0;
-        
-        return {
-            percent: scorePercent,
-            hasDefects: hasDefects,
-            scores: scores
-        };
     },
 
     // Step 9: Submit and evaluate ALC Checklist
@@ -110,18 +113,20 @@ const ALC_Checklist = {
             return;
         }
 
-        const evaluation = this.calculateScore();
+        const evaluation = await this.calculateScore();
         
-        // Pass validation rule: Score >= 80% AND zero Partial (1) or Non-Compliant (0) scores (meaning hasDefects is false)
-        let isPass = (evaluation.percent >= 80) && !evaluation.hasDefects;
-        let statusText = isPass ? "Completed" : "Failed - Pending Production";
-        let stateNext = isPass ? ALC_STATES.SUMMARY : ALC_STATES.PRODUCTION_ACTION;
+        let isPass = (parseFloat(evaluation.percent) >= 80);
+        let statusText = "Completed";
+        let stateNext = ALC_STATES.SUMMARY;
 
-        // Same-day check validation rule
         if (ALC_StateMachine.isPreviousDay) {
             isPass = false;
             statusText = "Closed - Expired";
             stateNext = ALC_STATES.SUMMARY;
+        } else if (evaluation.hasDefects) {
+            statusText = isPass ? "Success - Pending Production" : "Failed - Pending Production";
+            // QA (not in production team) should go to Summary page instead of Production Action
+            stateNext = (ALC_StateMachine.isProductionUser || ALC_StateMachine.isProductUser) ? ALC_STATES.PRODUCTION_ACTION : ALC_STATES.SUMMARY;
         }
 
         try {
@@ -148,7 +153,8 @@ const ALC_Checklist = {
                     const remarks = remarksEl ? remarksEl.value : "";
                     
                     let status = "OK";
-                    if (scoreText.includes("(0)") || scoreText === "00" || scoreText.includes("Non-Compliant")) {
+                    if (scoreText.includes("(0)") || scoreText === "00" || scoreText.includes("Non-Compliant") ||
+                        scoreText.includes("(1)") || scoreText === "01" || scoreText.includes("Partial")) {
                         status = "Not Okay";
                     }
 
@@ -171,13 +177,15 @@ const ALC_Checklist = {
             const baseTitle = session.cr3ea_title || ("ALC_" + moment().format("MM-DD-YYYY_HH:mm"));
             const cleanBaseTitle = baseTitle.split("||")[0].trim();
 
+            const dbStatusValue = statusText === "Success - Pending Production" ? "Failed - Pending Production" : statusText;
+
             const sessionUpdate = {
                 cr3ea_prod_qualitytourid: ALC_StateMachine.currentTourId,
-                cr3ea_status: statusText,
+                cr3ea_status: dbStatusValue,
                 cr3ea_processstatus: statusText,
                 cr3ea_title: cleanBaseTitle,
-                cr3ea_overall_score: evaluation.percent.toString(),
-                cr3ea_checklist_result: isPass ? "Pass" : (ALC_StateMachine.isPreviousDay ? "Expired" : "Fail")
+                cr3ea_overall_score: String(evaluation.percent),
+                cr3ea_checklist_result: !evaluation.hasDefects ? "Pass" : (ALC_StateMachine.isPreviousDay ? "Expired" : "Fail")
             };
             await ALC_DAL.saveSession(sessionUpdate);
 
@@ -186,7 +194,9 @@ const ALC_Checklist = {
             // Notify user with Alert
             if (ALC_StateMachine.isPreviousDay) {
                 alert(`Observations Submitted Successfully! Since this is a previous day's observation, the session has been closed as Expired without line clearance.`);
-            } else if (isPass) {
+            } else if (statusText === "Success - Pending Production") {
+                alert(`ALC Checklist Submitted successfully with Success Score: ${evaluation.percent}%. Forwarding to production for corrective actions.`);
+            } else if (statusText === "Completed") {
                 alert(`ALC Cleared Successfully! Score: ${evaluation.percent}%`);
             } else {
                 alert(`ALC Checklist Failed. Score: ${evaluation.percent}%. Forwarding to production for corrective actions.`);

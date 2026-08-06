@@ -364,17 +364,21 @@ const ALC_Main = {
 
         const isExpired = status === "Closed - Expired";
 
-        // Determine if the current user is the shift executive on this tour
-        const currentUserName = typeof currentUser !== "undefined" ? currentUser : "";
-        const currentUserLogin = typeof _spPageContextInfo !== 'undefined' ? _spPageContextInfo.userDisplayName : "";
-        const isShiftExec = session && (
-            session.cr3ea_shiftexecutiveproduction === currentUserName ||
-            session.cr3ea_shiftexecutiveproduction === currentUserLogin
+        // Determine if the current user is the shift executive on this tour (case-insensitive, trimmed comparison)
+        const currentUserName = (typeof currentUser !== "undefined" ? currentUser : "").trim().toLowerCase();
+        const currentUserLogin = (typeof _spPageContextInfo !== 'undefined' ? _spPageContextInfo.userDisplayName : "").trim().toLowerCase();
+        const shiftExecDb = (session && session.cr3ea_shiftexecutiveproduction ? session.cr3ea_shiftexecutiveproduction : "").trim().toLowerCase();
+        
+        const isShiftExec = shiftExecDb && (
+            shiftExecDb === currentUserName ||
+            shiftExecDb === currentUserLogin
         );
 
         // Update granular flags dynamically based on the session executive
         if (isShiftExec) {
             ALC_StateMachine.isProductionUser = true;
+        } else {
+            ALC_StateMachine.isProductionUser = false;
         }
         
         // Define terminal statuses

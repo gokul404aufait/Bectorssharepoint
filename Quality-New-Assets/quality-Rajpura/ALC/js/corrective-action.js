@@ -347,11 +347,14 @@ const ALC_CorrectiveAction = {
                                (ALC_StateMachine.currentSession.cr3ea_status === "Closed - Expired" || 
                                 ALC_StateMachine.currentSession.cr3ea_processstatus === "Closed - Expired"));
 
-            const targetStatus = isExpired ? "Closed - Expired" : "Pending Re-Verification";
+            const isSuccessTour = ALC_StateMachine.currentSession && 
+                                  ALC_StateMachine.currentSession.cr3ea_processstatus === "Success - Pending Production";
+            const targetStatus = isExpired ? "Closed - Expired" : (isSuccessTour ? "Success - Pending Re-Verification" : "Pending Re-Verification");
+            const dbStatusValue = targetStatus === "Success - Pending Re-Verification" ? "Pending Re-Verification" : targetStatus;
 
             const sessionUpdate = {
                 cr3ea_prod_qualitytourid: ALC_StateMachine.currentTourId,
-                cr3ea_status: targetStatus,
+                cr3ea_status: dbStatusValue,
                 cr3ea_processstatus: targetStatus
             };
             console.log("Saving quality tour status updates:", sessionUpdate);
@@ -370,7 +373,9 @@ const ALC_CorrectiveAction = {
                 await ALC_Summary.init(ALC_StateMachine.currentTourId);
             } else {
                 alert("All corrective actions submitted successfully. Assigning back to QA for re-verification.");
-                ALC_StateMachine.transitionTo(ALC_STATES.QA_REVERIFYING);
+                ALC_StateMachine.isReadOnly = true;
+                ALC_StateMachine.transitionTo(ALC_STATES.SUMMARY);
+                await ALC_Summary.init(ALC_StateMachine.currentTourId);
             }
 
         } catch (error) {

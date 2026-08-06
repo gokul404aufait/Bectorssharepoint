@@ -118,34 +118,45 @@ const ALC_Summary = {
 
             // Get obtained score for this checkpoint
             let numericScore = 2; // Default is Okay (2)
-            const initialScoreText = cp.cr3ea_defectcategory || "";
-            const isInitiallyFailed = (cp.cr3ea_status === "Not Okay" || initialScoreText.includes("Non-Compliant") || initialScoreText.includes("Partial") || initialScoreText === "00" || initialScoreText === "01");
+            const scoreText = cp.cr3ea_defectcategory || "";
             
-            if (isInitiallyFailed) {
-                // If failed initially, read score from re-verification results
-                const reverifyScoreText = cp.cr3ea_reverificationscore || "";
-                if (reverifyScoreText.includes("Compliant") || reverifyScoreText.includes("(2)")) {
-                    numericScore = 2;
-                } else if (reverifyScoreText.includes("Partial") || reverifyScoreText.includes("(1)") || reverifyScoreText === "01") {
-                    numericScore = 1;
-                } else {
-                    numericScore = 0;
-                }
+            if (scoreText.includes("(0)") || scoreText === "00" || scoreText.includes("Non-Compliant")) {
+                numericScore = 0;
+            } else if (scoreText.includes("(1)") || scoreText === "01" || scoreText.includes("Partial")) {
+                numericScore = 1;
             }
             
             totalObtainedPoints += numericScore;
             areaStats[area].obtained += numericScore;
         });
 
-        const overallPercent = totalMaxPoints > 0 ? Math.round((totalObtainedPoints / totalMaxPoints) * 100) : 0;
-        document.getElementById("sum-score-circle").innerText = `${overallPercent}%`;
+        const overallPercentRaw = totalMaxPoints > 0 ? (totalObtainedPoints / totalMaxPoints) * 100 : 0;
+        const overallPercent = overallPercentRaw.toFixed(2);
+        const scoreCircle = document.getElementById("sum-score-circle");
+        if (scoreCircle) {
+            scoreCircle.innerText = `${overallPercent}%`;
+            if (parseFloat(overallPercent) >= 80) {
+                scoreCircle.style.backgroundColor = "#10b981"; // Green
+                scoreCircle.style.boxShadow = "0 4px 6px -1px rgba(16, 185, 129, 0.3)";
+            } else {
+                scoreCircle.style.backgroundColor = "#ef4444"; // Red
+                scoreCircle.style.boxShadow = "0 4px 6px -1px rgba(239, 68, 68, 0.3)";
+            }
+        }
         
-        const isPass = (overallPercent >= 100);
+        const isPass = (parseFloat(overallPercent) >= 100);
         const scoreDesc = document.getElementById("sum-score-desc");
         if (scoreDesc) {
-            scoreDesc.innerText = isPass 
-                ? "Excellent! 100% compliance cleared successfully." 
-                : `Completed with ${overallPercent}% compliance score.`;
+            const status = this.session.cr3ea_processstatus || this.session.cr3ea_status || "";
+            if (status.includes("Pending Production")) {
+                scoreDesc.innerText = `Pending Production Corrective Actions. Current Score: ${overallPercent}%`;
+            } else if (status.includes("Pending Re-Verification")) {
+                scoreDesc.innerText = `Pending QA Re-Verification. Current Score: ${overallPercent}%`;
+            } else if (status === "Completed") {
+                scoreDesc.innerText = `Excellent! 100% compliance cleared successfully.`;
+            } else {
+                scoreDesc.innerText = `Completed with ${overallPercent}% compliance score.`;
+            }
         }
 
         // 5. Render Area-wise Summary Table
@@ -154,7 +165,8 @@ const ALC_Summary = {
             areasTbody.innerHTML = "";
             Object.keys(areaStats).sort().forEach(areaName => {
                 const stats = areaStats[areaName];
-                const areaPercent = stats.total > 0 ? Math.round((stats.obtained / stats.total) * 100) : 0;
+                const areaPercentRaw = stats.total > 0 ? (stats.obtained / stats.total) * 100 : 0;
+                const areaPercent = areaPercentRaw.toFixed(2);
                 const tr = document.createElement("tr");
                 tr.innerHTML = `
                     <td style="padding: 10px; font-weight: bold; text-align: left;">${areaName}</td>
@@ -162,7 +174,7 @@ const ALC_Summary = {
                     <td style="padding: 10px;">${stats.obtained / 2}</td>
                     <td style="padding: 10px; font-weight: bold;">${stats.obtained} / ${stats.total}</td>
                     <td style="padding: 10px;">
-                        <span class="badge ${areaPercent === 100 ? 'badge-success' : 'badge-warning'}" style="font-size: 13px;">${areaPercent}%</span>
+                        <span class="badge ${parseFloat(areaPercent) >= 100 ? 'badge-success' : 'badge-warning'}" style="font-size: 13px;">${areaPercent}%</span>
                     </td>
                 `;
                 areasTbody.appendChild(tr);
@@ -186,10 +198,15 @@ const ALC_Summary = {
                 
                 // QA Initial Score Badge
                 const initialScoreText = cp.cr3ea_defectcategory || "Okay (2)";
-                const isPassed = (initialScoreText.includes("Compliant") || initialScoreText.includes("(2)") || initialScoreText.toLowerCase().includes("okay") || initialScoreText.includes("OK"));
-                const initialBadge = isPassed 
+                const isFailed = initialScoreText.includes("(0)") || 
+                                 initialScoreText.includes("(1)") || 
+                                 initialScoreText.includes("Non-Compliant") || 
+                                 initialScoreText.includes("Partial") ||
+                                 initialScoreText === "00" ||
+                                 initialScoreText === "01";
+                const initialBadge = !isFailed 
                     ? `<span class="badge badge-success">${initialScoreText}</span>` 
-                    : `<span class="badge badge-danger">${initialScoreText}</span>`;
+                    : `<span class="badge badge-error">${initialScoreText}</span>`;
 
                 // Corrective Actions Column
                 let actionsTakenHtml = '<span class="text-muted">-</span>';
