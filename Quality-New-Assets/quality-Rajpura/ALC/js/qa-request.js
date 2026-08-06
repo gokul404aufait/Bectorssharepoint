@@ -131,7 +131,7 @@ const ALC_QARequest = {
             cr3ea_status: "Pending QA",
             cr3ea_processstatus: "Pending QA",
             cr3ea_title: "ALC_" + moment().format("MM-DD-YYYY_HH:mm"),
-            cr3ea_tourby: assignedQaName, // Storing QA Name in tourby
+            cr3ea_tourby: assignedQaEmail, // Storing QA Email in tourby (must be unique)
             cr3ea_shiftexecutiveproduction: productionExecName,
             cr3ea_lineno: line,
             cr3ea_shift: shift,
@@ -141,6 +141,10 @@ const ALC_QARequest = {
             cr3ea_request_time: requestTime,
             cr3ea_escalation_contacts: escalationEmails.join(",")
         };
+
+        if (ALC_StateMachine.currentTourId) {
+            headerData.cr3ea_prod_qualitytourid = ALC_StateMachine.currentTourId;
+        }
 
         // Cache escalation details locally
         this.escalationEmailsResolved = escalationEmails;
@@ -226,13 +230,27 @@ const ALC_QARequest = {
             return;
         }
 
-        const qaName = typeof currentUser !== "undefined" ? currentUser : "QA Executive";
+        let qaEmail = typeof currentUserEmail !== "undefined" ? currentUserEmail : "";
+        if (!qaEmail && typeof _spPageContextInfo !== 'undefined' && _spPageContextInfo.userEmail) {
+            qaEmail = _spPageContextInfo.userEmail;
+        }
+        if (!qaEmail && typeof _spPageContextInfo !== 'undefined' && _spPageContextInfo.userDisplayName) {
+            qaEmail = _spPageContextInfo.userDisplayName;
+        }
+        if (!qaEmail) {
+            // Fallback to cached assigned QA email
+            qaEmail = this.assignedQaEmailResolved || "";
+        }
+        if (!qaEmail) {
+            // Fallback if still empty
+            qaEmail = "QA Executive";
+        }
 
         const updateData = {
             cr3ea_prod_qualitytourid: ALC_StateMachine.currentTourId,
             cr3ea_status: "QA In Progress",
             cr3ea_processstatus: "QA In Progress",
-            cr3ea_tourby: qaName
+            cr3ea_tourby: qaEmail
         };
 
         try {

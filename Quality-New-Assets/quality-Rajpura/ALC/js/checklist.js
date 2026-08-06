@@ -115,13 +115,13 @@ const ALC_Checklist = {
         // Pass validation rule: Score >= 80% AND zero Partial (1) or Non-Compliant (0) scores (meaning hasDefects is false)
         let isPass = (evaluation.percent >= 80) && !evaluation.hasDefects;
         let statusText = isPass ? "Completed" : "Failed - Pending Production";
-        let stateNext = isPass ? ALC_STATES.COMPLETED_PASS : ALC_STATES.PRODUCTION_ACTION;
+        let stateNext = isPass ? ALC_STATES.SUMMARY : ALC_STATES.PRODUCTION_ACTION;
 
         // Same-day check validation rule
         if (ALC_StateMachine.isPreviousDay) {
             isPass = false;
             statusText = "Closed - Expired";
-            stateNext = ALC_STATES.SESSION_DASHBOARD;
+            stateNext = ALC_STATES.SUMMARY;
         }
 
         try {
@@ -194,6 +194,9 @@ const ALC_Checklist = {
 
             // Transition to Next State
             ALC_StateMachine.transitionTo(stateNext);
+            if (stateNext === ALC_STATES.SUMMARY) {
+                await ALC_Summary.init(ALC_StateMachine.currentTourId);
+            }
 
         } catch (error) {
             HideLoader();

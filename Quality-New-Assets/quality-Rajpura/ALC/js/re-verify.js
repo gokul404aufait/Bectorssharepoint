@@ -11,11 +11,11 @@ const ALC_ReVerification = {
         try {
             ShowLoader();
             const checkpoints = await ALC_DAL.getCheckpoints(ALC_StateMachine.currentTourId);
-            
+
             // Only re-verify the items that were previously marked Not Okay
-            this.failedCheckpoints = checkpoints.filter(c => 
-                c.cr3ea_status === "Not Okay" || 
-                c.cr3ea_defectcategory.includes("00") || 
+            this.failedCheckpoints = checkpoints.filter(c =>
+                c.cr3ea_status === "Not Okay" ||
+                c.cr3ea_defectcategory.includes("00") ||
                 c.cr3ea_defectcategory.includes("01") ||
                 c.cr3ea_defectcategory.includes("Non-Compliant") ||
                 c.cr3ea_defectcategory.includes("Partial")
@@ -42,24 +42,43 @@ const ALC_ReVerification = {
         tbody.innerHTML = "";
         this.failedCheckpoints.forEach((cp, index) => {
             const row = document.createElement("tr");
+
+            let remarksHtml = cp.cr3ea_productionremarks || "";
+            if (!remarksHtml && cp.cr3ea_defectremarks && cp.cr3ea_defectremarks.startsWith("Action:")) {
+                remarksHtml = cp.cr3ea_defectremarks;
+            }
+            if (remarksHtml.includes(" | Re-verified:")) {
+                remarksHtml = remarksHtml.split(" | Re-verified:")[0].trim();
+            }
+            if (remarksHtml.includes("| File:")) {
+                const parts = remarksHtml.split("| File:");
+                const textPart = parts[0].trim();
+                const fileName = parts[1] ? parts[1].trim() : "";
+                if (fileName) {
+                    const webUrl = typeof _spPageContextInfo !== 'undefined' ? _spPageContextInfo.webAbsoluteUrl : "";
+                    const fileUrl = `${webUrl}/ALC_CorrectiveActions_Docs/${fileName}`;
+                    remarksHtml = `${textPart} | <a href="${fileUrl}" target="_blank" style="text-decoration: underline; color: #1a73e8; font-weight: bold;">View Proof (${fileName})</a>`;
+                }
+            }
+
             row.innerHTML = `
-                <td>${index + 1}</td>
-                <td style="text-align: left;">
-                    <strong>${cp.cr3ea_area}</strong><br>
-                    <span class="text-secondary">${cp.cr3ea_criteria}</span><br>
-                    <small class="text-info">${cp.cr3ea_defectremarks || ""}</small>
-                </td>
-                <td>
-                    <select class="form-select reverify-score-select" data-index="${index}">
-                        <option value="Compliant (2)" selected>Compliant (2)</option>
-                        <option value="Partial (1)">Partial (1)</option>
-                        <option value="Non-Compliant (0)">Non-Compliant (0)</option>
-                    </select>
-                </td>
-                <td>
-                    <input type="text" class="form-control reverify-remarks-input" data-index="${index}" placeholder="Enter Remarks">
-                </td>
-            `;
+                 <td>${index + 1}</td>
+                 <td style="text-align: left;">
+                     <strong>${cp.cr3ea_area}</strong><br>
+                     <span class="text-secondary">${cp.cr3ea_criteria}</span><br>
+                     <small class="text-info">${remarksHtml}</small>
+                 </td>
+                 <td>
+                     <select class="form-select reverify-score-select" data-index="${index}">
+                         <option value="Compliant (2)" selected>Compliant (2)</option>
+                         <option value="Partial (1)">Partial (1)</option>
+                         <option value="Non-Compliant (0)">Non-Compliant (0)</option>
+                     </select>
+                 </td>
+                 <td>
+                     <input type="text" class="form-control reverify-remarks-input" data-index="${index}" placeholder="Enter Remarks">
+                 </td>
+             `;
             tbody.appendChild(row);
         });
 
@@ -77,7 +96,7 @@ const ALC_ReVerification = {
         if (!ALC_StateMachine.currentTourId || this.failedCheckpoints.length === 0) return;
 
         let anyFailedAgain = false;
-        
+
         try {
             ShowLoader();
 
@@ -86,7 +105,7 @@ const ALC_ReVerification = {
                 const cp = this.failedCheckpoints[i];
                 const selectEl = document.querySelector(`.reverify-score-select[data-index='${i}']`);
                 const remarksEl = document.querySelector(`.reverify-remarks-input[data-index='${i}']`);
-                
+
                 const scoreText = selectEl ? selectEl.value : "Compliant (2)";
                 const remarks = remarksEl ? remarksEl.value.trim() : "";
 
@@ -97,6 +116,15 @@ const ALC_ReVerification = {
                     anyFailedAgain = true;
                 }
 
+                let baseRemark = cp.cr3ea_defectremarks || "";
+                if (baseRemark.includes(" | Re-verified:")) {
+                    baseRemark = baseRemark.split(" | Re-verified:")[0].trim();
+                }
+
+                const finalRemarks = remarks 
+                    ? (baseRemark ? `${baseRemark} | Re-verified: ${remarks}` : remarks)
+                    : cp.cr3ea_defectremarks;
+
                 // Update checkpoint record in Dataverse
                 const updatedRecord = {
                     cr3ea_rajpura_alcsid: cp.cr3ea_rajpura_alcsid,
@@ -104,21 +132,24 @@ const ALC_ReVerification = {
                     // Increment cycle to show re-verification cycle
                     cr3ea_cycle: `Cycle-2`,
                     cr3ea_defectcategory: scoreText,
-                    cr3ea_defectremarks: remarks || cp.cr3ea_defectremarks
+                    cr3ea_defectremarks: finalRemarks
                 };
+                if (status === "Not Okay") {
+                    updatedRecord.cr3ea_productionremarks = "";
+                }
                 await ALC_DAL.saveChecklistRow(updatedRecord);
             }
 
             // 2. Evaluate overall result
             let statusText = !anyFailedAgain ? "Completed" : "Failed - Pending Production";
             let isPass = !anyFailedAgain;
-            let stateNext = isPass ? ALC_STATES.COMPLETED_PASS : ALC_STATES.PRODUCTION_ACTION;
+            let stateNext = isPass ? ALC_STATES.SUMMARY : ALC_STATES.PRODUCTION_ACTION;
 
             // Same-day check validation rule
             if (ALC_StateMachine.isPreviousDay) {
                 isPass = false;
                 statusText = "Closed - Expired";
-                stateNext = ALC_STATES.SESSION_DASHBOARD;
+                stateNext = ALC_STATES.SUMMARY;
             }
 
             // Compute overall score
@@ -155,7 +186,7 @@ const ALC_ReVerification = {
             await ALC_DAL.saveSession(sessionUpdate);
 
             HideLoader();
-            
+
             if (ALC_StateMachine.isPreviousDay) {
                 alert(`Observations Submitted Successfully! Since this is a previous day's observation, the session has been closed as Expired without line clearance.`);
             } else if (isPass) {
@@ -166,6 +197,9 @@ const ALC_ReVerification = {
 
             // Transition state
             ALC_StateMachine.transitionTo(stateNext);
+            if (stateNext === ALC_STATES.SUMMARY) {
+                await ALC_Summary.init(ALC_StateMachine.currentTourId);
+            }
 
         } catch (error) {
             HideLoader();

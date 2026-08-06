@@ -9,8 +9,8 @@
     font-family: 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
 }
 
-#rajpura-alc-main-container input, 
-#rajpura-alc-main-container select, 
+#rajpura-alc-main-container input,
+#rajpura-alc-main-container select,
 #rajpura-alc-main-container textarea {
     box-sizing: border-box !important;
     border-radius: 6px !important;
@@ -40,17 +40,180 @@
     border-bottom: 1px solid #f1f5f9 !important;
 }
 
-/* Button overrides to ensure they don't inherit SharePoint button backgrounds */
+/* Button overrides to ensure they don't inherit SharePoint button styles */
 #rajpura-alc-main-container .bs-btn {
     font-weight: 500 !important;
     border-radius: 6px !important;
+    padding: 8px 16px !important;
+    font-size: 14px !important;
+    height: auto !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
 }
 
 #rajpura-alc-main-container .bs-btn-primary {
-    background-color: #2563eb !important;
+    background-color: #98d6d8 !important;
     color: #ffffff !important;
 }
 
 #rajpura-alc-main-container .bs-btn-primary:hover {
     background-color: #1d4ed8 !important;
+}
+
+#rajpura-alc-main-container .bs-btn-secondary {
+    background-color: #e2e8f0 !important;
+    color: #334155 !important;
+}
+
+#rajpura-alc-main-container .bs-btn-danger {
+    background-color: #ef4444 !important;
+    color: #ffffff !important;
+}
+
+/* Badges specificity booster */
+#rajpura-alc-main-container .badge {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 6px 12px !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    border-radius: 9999px !important;
+    border: 1px solid transparent !important;
+}
+
+#rajpura-alc-main-container .badge-warning {
+    background-color: #fef3c7 !important;
+    color: #92400e !important;
+    border-color: #fde68a !important;
+}
+
+#rajpura-alc-main-container .badge-error {
+    background-color: #fee2e2 !important;
+    color: #991b1b !important;
+    border-color: #fecaca !important;
+}
+
+#rajpura-alc-main-container .badge-success {
+    background-color: #dcfce7 !important;
+    color: #166534 !important;
+    border-color: #bbf7d0 !important;
+}
+
+/* Inputs and Select element styling overrides */
+#rajpura-alc-main-container select,
+#rajpura-alc-main-container input[type=text],
+#rajpura-alc-main-container textarea {
+    border: 1px solid #cbd5e1 !important;
+    padding: 10px 14px !important;
+    font-size: 14px !important;
+    height: 42px !important;
+    background-color: #ffffff !important;
+    color: #1e293b !important;
+}
+
+#rajpura-alc-main-container textarea {
+    height: auto !important;
+    min-height: 80px !important;
+}
+
+/* Select2 specific overrides inside our container */
+#rajpura-alc-main-container .select2-container--default .select2-selection--single {
+    height: 42px !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 6px !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+#rajpura-alc-main-container .select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 42px !important;
+    padding-left: 14px !important;
+    color: #1e293b !important;
+}
+
+#rajpura-alc-main-container .select2-container--default .select2-selection--single .select2-selection__arrow {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    top: 0 !important;
+    height: 100% !important;
+    right: 10px !important;
+    width: 20px !important;
+}
+
+#rajpura-alc-main-container .select2-container--default .select2-selection--single .select2-selection__arrow::before,
+#rajpura-alc-main-container .select2-container--default .select2-selection--single .select2-selection__arrow b {
+    position: static !important;
+    margin-top: 20px !important;
+    margin-left: 0 !important;
+    display: inline-block !important;
+}
+
+/* Alert banner styling overrides */
+#rajpura-alc-main-container .alert {
+    padding: 15px !important;
+    border-radius: 8px !important;
+    margin-bottom: 20px !important;
+    border: 1px solid transparent !important;
+}
+
+#rajpura-alc-main-container .alert-warning {
+    background-color: #fef3c7 !important;
+    color: #92400e !important;
+    border-color: #fde68a !important;
+}
+
+/* Select2 container width override to prevent narrow display */
+#rajpura-alc-main-container .select2-container {
+    width: 100% !important;
+}
+
+/* Styled states for read-only and disabled input fields */
+#rajpura-alc-main-container input[readonly],
+#rajpura-alc-main-container input[disabled],
+#rajpura-alc-main-container select[disabled] {
+    background-color: #f1f5f9 !important;
+    color: #64748b !important;
+    cursor: not-allowed !important;
+    border-color: #cbd5e1 !important;
+}
+
+/* Layout overrides to prevent double scrollbars and allow full height rendering */
+#rajpura-alc-main-container {
+    overflow: visible !important;
+    max-height: none !important;
+    min-height: auto !important;
+}
+
+#rajpura-alc-main-container .plan-tour-body {
+    overflow: visible !important;
+    max-height: none !important;
+    min-height: auto !important;
+    display: block !important;
+    padding: 24px 20px !important;
+}
+
+#rajpura-alc-main-container .bs-tab-wrapper {
+    overflow: visible !important;
+    flex: none !important;
+    padding: 0 !important;
+}
+
+/* Breadcrumb progress tracker styles */
+#rajpura-alc-main-container .tour-workflow-stepper .breadcrumb-step.completed {
+    color: #16a34a !important;
+    font-size: 13px !important;
+}
+
+#rajpura-alc-main-container .tour-workflow-stepper .breadcrumb-step.active {
+    background-color: #98d6d8 !important;
+    color: #ffffff !important;
+    font-size: 13px !important;
+}
+
+/* Ensure spinner is shown above full screen backdrop overlay */
+.Loader {
+    z-index: 100000 !important;
 }

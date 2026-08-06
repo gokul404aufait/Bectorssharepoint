@@ -41,6 +41,29 @@ const ALC_DAL = {
         
         // Map keys so the consumer doesn't have to care about internal name differences
         return results.map(item => {
+            const rawUser = isFallback ? item.Assigned_x0020_User : item.AssignedUser;
+            const rawManager = isFallback ? item.Escalation_x0020_Manager : item.EscalationManager;
+            
+            // Normalize AssignedUser to always have a 'results' array
+            let assignedUserNormalized = { results: [] };
+            if (rawUser) {
+                if (rawUser.results && Array.isArray(rawUser.results)) {
+                    assignedUserNormalized = rawUser;
+                } else if (rawUser.Title || rawUser.EMail) {
+                    assignedUserNormalized = { results: [rawUser] };
+                }
+            }
+
+            // Normalize EscalationManager to always have a 'results' array
+            let escalationManagerNormalized = { results: [] };
+            if (rawManager) {
+                if (rawManager.results && Array.isArray(rawManager.results)) {
+                    escalationManagerNormalized = rawManager;
+                } else if (rawManager.Title || rawManager.EMail) {
+                    escalationManagerNormalized = { results: [rawManager] };
+                }
+            }
+
             return {
                 Id: item.Id,
                 Title: item.Title,
@@ -48,8 +71,8 @@ const ALC_DAL = {
                 Region: item.Region,
                 Plant: item.Plant,
                 Area: item.Area,
-                AssignedUser: isFallback ? item.Assigned_x0020_User : item.AssignedUser,
-                EscalationManager: isFallback ? item.Escalation_x0020_Manager : item.EscalationManager
+                AssignedUser: assignedUserNormalized,
+                EscalationManager: escalationManagerNormalized
             };
         });
     },
@@ -68,9 +91,37 @@ const ALC_DAL = {
         return null;
     },
 
+    // Fetch wrapper that handles token injection and 401 retries
+    fetchWithToken: async function (url, options = {}) {
+        let token = await this.getAccessToken();
+        if (!options.headers) {
+            options.headers = {};
+        }
+        if (token) {
+            options.headers["Authorization"] = `Bearer ${token}`;
+        }
+
+        let response = await fetch(url, options);
+        if (response.status === 401) {
+            console.warn("ALC_DAL: 401 Unauthorized detected. Clearing cached token and retrying...");
+            localStorage.removeItem("access_token");
+            const freshToken = await this.getAccessToken();
+            if (freshToken) {
+                options.headers["Authorization"] = `Bearer ${freshToken}`;
+                response = await fetch(url, options);
+            }
+        }
+        return response;
+    },
+
     // 2. Create or Update Dataverse ALC Session
     saveSession: async function (sessionData) {
         const AccessToken = await this.getAccessToken();
+        if (!AccessToken) {
+            console.warn("No token available. Simulating saveSession locally.");
+            return { cr3ea_prod_qualitytourid: "mock-session-id-" + Date.now() };
+        }
+
         const apiVersion = "9.2";
         const tableName = "cr3ea_prod_qualitytours"; // Reuse existing entity or define custom state columns
         const baseApiUrl = typeof environmentUrl !== 'undefined' ? environmentUrl : '';
@@ -82,12 +133,6 @@ const ALC_DAL = {
             "OData-Version": "4.0",
             "Prefer": "return=representation"
         };
-        if (AccessToken) {
-            headers["Authorization"] = `Bearer ${AccessToken}`;
-        } else {
-            console.warn("No token available. Simulating saveSession locally.");
-            return { cr3ea_prod_qualitytourid: "mock-session-id-" + Date.now() };
-        }
 
         let url = `${baseApiUrl}/api/data/v${apiVersion}/${tableName}`;
         let method = "POST";
@@ -97,7 +142,7 @@ const ALC_DAL = {
             method = "PATCH";
         }
 
-        const response = await fetch(url, {
+        const response = await this.fetchWithToken(url, {
             method: method,
             headers: headers,
             body: JSON.stringify(sessionData)
@@ -118,6 +163,11 @@ const ALC_DAL = {
     // 3. Save Checklist Checkpoints to Dataverse
     saveChecklistRow: async function (rowRecord) {
         const AccessToken = await this.getAccessToken();
+        if (!AccessToken) {
+            console.warn("No token available. Simulating checklist row save locally.");
+            return { cr3ea_rajpura_alcsid: "mock-row-id-" + Date.now() };
+        }
+
         const apiVersion = "9.2";
         const tableName = "cr3ea_rajpura_alcses";
         const baseApiUrl = typeof environmentUrl !== 'undefined' ? environmentUrl : '';
@@ -129,12 +179,6 @@ const ALC_DAL = {
             "OData-Version": "4.0",
             "Prefer": "return=representation"
         };
-        if (AccessToken) {
-            headers["Authorization"] = `Bearer ${AccessToken}`;
-        } else {
-            console.warn("No token available. Simulating checklist row save locally.");
-            return { cr3ea_rajpura_alcsid: "mock-row-id-" + Date.now() };
-        }
 
         let url = `${baseApiUrl}/api/data/v${apiVersion}/${tableName}`;
         let method = "POST";
@@ -144,7 +188,7 @@ const ALC_DAL = {
             method = "PATCH";
         }
 
-        const response = await fetch(url, {
+        const response = await this.fetchWithToken(url, {
             method: method,
             headers: headers,
             body: JSON.stringify(rowRecord)
@@ -165,6 +209,11 @@ const ALC_DAL = {
     // Fetch existing checkpoints for a Quality Tour ID
     getCheckpoints: async function (tourId) {
         const AccessToken = await this.getAccessToken();
+        if (!AccessToken) {
+            console.warn("No token available. Simulating getCheckpoints locally.");
+            return [];
+        }
+
         const apiVersion = "9.2";
         const tableName = "cr3ea_rajpura_alcses";
         const baseApiUrl = typeof environmentUrl !== 'undefined' ? environmentUrl : '';
@@ -174,17 +223,11 @@ const ALC_DAL = {
             "OData-MaxVersion": "4.0",
             "OData-Version": "4.0"
         };
-        if (AccessToken) {
-            headers["Authorization"] = `Bearer ${AccessToken}`;
-        } else {
-            console.warn("No token available. Simulating getCheckpoints locally.");
-            return [];
-        }
 
         const filter = `?$filter=cr3ea_qualitytourid eq '${tourId}'`;
         const url = `${baseApiUrl}/api/data/v${apiVersion}/${tableName}${filter}`;
 
-        const response = await fetch(url, {
+        const response = await this.fetchWithToken(url, {
             method: "GET",
             headers: headers
         });
@@ -201,18 +244,7 @@ const ALC_DAL = {
     // Fetch all active tour sessions for Rajpura plant (Plant ID 14)
     getActiveSessions: async function () {
         const AccessToken = await this.getAccessToken();
-        const apiVersion = "9.2";
-        const tableName = "cr3ea_prod_qualitytours";
-        const baseApiUrl = typeof environmentUrl !== 'undefined' ? environmentUrl : '';
-
-        const headers = {
-            "Accept": "application/json",
-            "OData-MaxVersion": "4.0",
-            "OData-Version": "4.0"
-        };
-        if (AccessToken) {
-            headers["Authorization"] = `Bearer ${AccessToken}`;
-        } else {
+        if (!AccessToken) {
             console.warn("No token available. Simulating getActiveSessions locally.");
             return [
                 {
@@ -228,11 +260,21 @@ const ALC_DAL = {
             ];
         }
 
+        const apiVersion = "9.2";
+        const tableName = "cr3ea_prod_qualitytours";
+        const baseApiUrl = typeof environmentUrl !== 'undefined' ? environmentUrl : '';
+
+        const headers = {
+            "Accept": "application/json",
+            "OData-MaxVersion": "4.0",
+            "OData-Version": "4.0"
+        };
+
         // Retrieve the latest 50 tours so we don't miss active ones while displaying today's completed/closed tours
         const filter = `?$filter=cr3ea_plantid eq '14'&$orderby=cr3ea_tourstartdate desc&$top=50`;
         const url = `${baseApiUrl}/api/data/v${apiVersion}/${tableName}${filter}`;
 
-        const response = await fetch(url, {
+        const response = await this.fetchWithToken(url, {
             method: "GET",
             headers: headers
         });
@@ -267,8 +309,14 @@ const ALC_DAL = {
     // 4. Upload Attachment to SharePoint Document Library
     uploadCorrectiveActionFile: async function (fileObject, tourId, areaName, checkpointId, actionRemarks) {
         const webUrl = typeof _spPageContextInfo !== 'undefined' ? _spPageContextInfo.webAbsoluteUrl : "";
+        const webServerRelativeUrl = typeof _spPageContextInfo !== 'undefined' ? _spPageContextInfo.webServerRelativeUrl : "";
         const libraryName = "ALC_CorrectiveActions_Docs";
         
+        // Build proper server relative URL for folder
+        const serverRelativeUrl = webServerRelativeUrl === "/" 
+            ? `/${libraryName}` 
+            : `${webServerRelativeUrl}/${libraryName}`;
+
         // 1. Get Request Digest (Form Digest)
         const digestResponse = await $.ajax({
             url: `${webUrl}/_api/contextinfo`,
@@ -285,13 +333,27 @@ const ALC_DAL = {
             reader.readAsArrayBuffer(fileObject);
         });
 
-        // 3. Upload File with ListItemAllFields expanded
-        const fileAddUrl = `${webUrl}/_api/web/lists/getByTitle('${libraryName}')/RootFolder/Files/add(url='${fileObject.name}', overwrite=true)?$expand=ListItemAllFields`;
+        // 3. Generate unique filename (e.g. proof_20260803_134639.png)
+        const dotIndex = fileObject.name.lastIndexOf(".");
+        let baseName = fileObject.name;
+        let extension = "";
+        if (dotIndex !== -1) {
+            baseName = fileObject.name.substring(0, dotIndex);
+            extension = fileObject.name.substring(dotIndex);
+        }
+        // Clean special characters to avoid SharePoint upload issues
+        baseName = baseName.replace(/[^a-zA-Z0-9_-]/g, "_");
+        const timestamp = typeof moment !== 'undefined' ? moment().format("YYYYMMDD_HHmmss") : Date.now();
+        const uniqueFileName = `${baseName}_${timestamp}${extension}`;
+
+        // 4. Upload File via GetFolderByServerRelativeUrl
+        const fileAddUrl = `${webUrl}/_api/web/GetFolderByServerRelativeUrl('${serverRelativeUrl}')/Files/add(url='${uniqueFileName}', overwrite=true)?$expand=ListItemAllFields`;
         const uploadResponse = await $.ajax({
             url: fileAddUrl,
             method: "POST",
             data: fileBuffer,
             processData: false,
+            contentType: "application/octet-stream", // Prevent jQuery from corrupting binary stream
             headers: {
                 "Accept": "application/json; odata=verbose",
                 "X-RequestDigest": requestDigest
@@ -312,9 +374,18 @@ const ALC_DAL = {
             fileItemId = itemResponse.d.Id;
         }
 
+        // Fetch ListItemEntityTypeFullName dynamically from SharePoint to bypass type resolution error
+        const entityResponse = await $.ajax({
+            url: `${webUrl}/_api/web/lists/getByTitle('${libraryName}')?$select=ListItemEntityTypeFullName`,
+            method: "GET",
+            headers: { "Accept": "application/json; odata=verbose" }
+        });
+        const listItemEntityType = entityResponse.d.ListItemEntityTypeFullName;
+
         // 4. Update File Metadata
         const metadataPayload = {
-            "__metadata": { "type": "SP.Data.ALC_CorrectiveActions_DocsItem" },
+            "__metadata": { "type": listItemEntityType },
+            "Title": uniqueFileName, // Set Title using the unique timestamped filename
             "QualityTourId": tourId,
             "AreaName": areaName,
             "CheckpointID": checkpointId,
